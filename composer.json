@@ -1,6 +1,7 @@
 {
   "name": "laravelista/ekko",
   "description": "Laravel helper for detecting active navigation menu items and applying bootstrap classes.",
+  "keywords": ["navigation", "bootstrap", "laravel", "helper"],
   "license": "MIT",
   "authors": [
     {
@@ -13,9 +14,6 @@
     "illuminate/support": "~4.0|~5.0"
   },
   "autoload": {
-    "classmap": [
-      "src/migrations"
-    ],
     "psr-0": {
       "Laravelista\\Ekko\\": "src/"
     }
