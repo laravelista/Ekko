@@ -1,5 +1,7 @@
 # Ekko
 
+[![Latest Stable Version](https://poser.pugx.org/laravelista/ekko/v/stable)](https://packagist.org/packages/laravelista/ekko) [![Total Downloads](https://poser.pugx.org/laravelista/ekko/downloads)](https://packagist.org/packages/laravelista/ekko) [![Latest Unstable Version](https://poser.pugx.org/laravelista/ekko/v/unstable)](https://packagist.org/packages/laravelista/ekko) [![License](https://poser.pugx.org/laravelista/ekko/license)](https://packagist.org/packages/laravelista/ekko)
+
 ![Ekko](./ekko.jpg)
 
 Laravel helper that detects active navigation menu items and applies bootstrap classes.
