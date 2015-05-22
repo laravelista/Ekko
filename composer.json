@@ -1,6 +1,7 @@
 {
   "name": "laravelista/ekko",
   "description": "Laravel helper for detecting active navigation menu items and applying bootstrap classes.",
+  "license": "MIT",
   "authors": [
     {
       "name": "Mario Basic",
