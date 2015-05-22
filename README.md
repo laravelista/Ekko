@@ -1,6 +1,6 @@
 # Ekko
 
-![Bard](http://news.cdn.leagueoflegends.com/public/images/pages/2015/breveal/img/Promo_Bard_Reveal_BardFloating.png)
+![Ekko](./ekko.jpg)
 
 Laravel helper that detects active navigation menu items and applies bootstrap classes.
 
