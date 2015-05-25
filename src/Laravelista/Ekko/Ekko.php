@@ -1,35 +1,31 @@
-<?php  namespace Laravelista\Ekko;
+<?php namespace Laravelista\Ekko;
 
 use Route;
 use URL;
 
 class Ekko {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Detect Active Route
-    |--------------------------------------------------------------------------
-    |
-    | Compare given route with current route and return output if they match.
-    | Very useful for navigation, marking if the link is active.
-    |
-    */
-    public function isActiveRoute($route, $output = "active")
+    /**
+     * Compares given route name with current route name.
+     *
+     * @param  string  $routeName
+     * @param  string  $output
+     * @return boolean
+     */
+    public function isActiveRoute($routeName, $output = "active")
     {
-        if(Route::currentRouteName() == $route) return $output;
+        if(Route::currentRouteName() == $routeName) return $output;
 
         return null;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Detect Active URL (use route instead)
-    |--------------------------------------------------------------------------
-    |
-    | Compare given url with current url and return output if they match.
-    | Very useful for navigation, marking if the link is active.
-    |
-    */
+    /**
+     * Compares given URL with current URL.
+     *
+     * @param  string  $url
+     * @param  string  $output
+     * @return boolean
+     */
     public function isActiveURL($url, $output = "active")
     {
         if(URL::current() == url($url)) return $output;
@@ -37,15 +33,13 @@ class Ekko {
         return null;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Detect Active Match (use route instead)
-    |--------------------------------------------------------------------------
-    |
-    | Compare given string with current url and return output if they match.
-    | Very useful for navigation, marking if the link is active.
-    |
-    */
+    /**
+     * Detects if the given string is found in the current URL.
+     *
+     * @param  string  $string
+     * @param  string  $output
+     * @return boolean
+     */
     public function isActiveMatch($string, $output = "active")
     {
         if(strpos(URL::current(), $string)) return $output;
@@ -53,35 +47,31 @@ class Ekko {
         return null;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Detect Active Routes
-    |--------------------------------------------------------------------------
-    |
-    | Compare given routes with current route and return output if they match.
-    | Very useful for navigation, marking if the link is active.
-    |
-    */
-    public function areActiveRoutes(Array $routes, $output = "active")
+    /**
+     * Compares given array of route names with current route name.
+     *
+     * @param  array  $routeNames
+     * @param  string $output
+     * @return boolean
+     */
+    public function areActiveRoutes(array $routeNames, $output = "active")
     {
-        foreach($routes as $route)
+        foreach($routeNames as $routeName)
         {
-            if(Route::currentRouteName() == $route) return $output;
+            if(Route::currentRouteName() == $routeName) return $output;
         }
 
         return null;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Detect Active URLs (use routes instead)
-    |--------------------------------------------------------------------------
-    |
-    | Compare given url with current url and return output if they match.
-    | Very useful for navigation, marking if the link is active.
-    |
-    */
-    public function areActiveURLs(Array $urls, $output = "active")
+    /**
+     * Compares given array of URLs with current URL.
+     *
+     * @param  array  $urls
+     * @param  string $output
+     * @return boolean
+     */
+    public function areActiveURLs(array $urls, $output = "active")
     {
         foreach($urls as $url)
         {
