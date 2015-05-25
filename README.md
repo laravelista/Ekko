@@ -8,8 +8,6 @@ Laravel helper that detects active navigation menu items and applies bootstrap c
 
 > I reuse this code across many projects so I wanted a central place for it.
 
-*I will add the API very soon.*
-
 ## Installation
 
 First, pull in the package through Composer.
