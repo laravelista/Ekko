@@ -1,9 +1,18 @@
 <?php namespace Laravelista\Ekko;
 
-use Route;
-use URL;
+use Illuminate\Routing\Router as Route;
+use Illuminate\Routing\UrlGenerator as URL;
 
-class Ekko {
+class Ekko
+{
+    protected $route;
+    protected $url;
+
+    public function __construct(Route $route, URL $url)
+    {
+        $this->route = $route;
+        $this->url = $url;
+    }
 
     /**
      * Compares given route name with current route name.
@@ -14,7 +23,9 @@ class Ekko {
      */
     public function isActiveRoute($routeName, $output = "active")
     {
-        if(Route::currentRouteName() == $routeName) return $output;
+        if ($this->route->currentRouteName() == $routeName) {
+            return $output;
+        }
 
         return null;
     }
@@ -28,7 +39,9 @@ class Ekko {
      */
     public function isActiveURL($url, $output = "active")
     {
-        if(URL::current() == url($url)) return $output;
+        if ($this->url->current() == $this->url->to($url)) {
+            return $output;
+        }
 
         return null;
     }
@@ -42,7 +55,9 @@ class Ekko {
      */
     public function isActiveMatch($string, $output = "active")
     {
-        if(strpos(URL::current(), $string)) return $output;
+        if (strpos($this->url->current(), $string) !== false) {
+            return $output;
+        }
 
         return null;
     }
@@ -56,9 +71,10 @@ class Ekko {
      */
     public function areActiveRoutes(array $routeNames, $output = "active")
     {
-        foreach($routeNames as $routeName)
-        {
-            if(Route::currentRouteName() == $routeName) return $output;
+        foreach ($routeNames as $routeName) {
+            if ($this->isActiveRoute($routeName, true)) {
+                return $output;
+            }
         }
 
         return null;
@@ -73,9 +89,10 @@ class Ekko {
      */
     public function areActiveURLs(array $urls, $output = "active")
     {
-        foreach($urls as $url)
-        {
-            if(URL::current() == url($url)) return $output;
+        foreach ($urls as $url) {
+            if ($this->isActiveURL($url, true)) {
+                return $output;
+            }
         }
 
         return null;
