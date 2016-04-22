@@ -15,7 +15,7 @@ First, pull in the package through Composer.
 
 ```js
 "require": {
-    "laravelista/ekko": "~1.0"
+    "laravelista/ekko": "~1.2"
 }
 ```
 
@@ -79,6 +79,12 @@ Compares given route name with current route name.
 {{ Ekko::isActiveRoute('home') }}
 ```
 
+The `*` wildcard can be used for resource routes.
+
+```php
+{{ Ekko::isActiveRoute('user.*') }}
+```
+
 #### `isActiveURL($url, $output = "active")`
 
 Compares given URL with current URL.
@@ -101,6 +107,12 @@ Compares given array of route names with current route name.
 
 ```php
 {{ Ekko::areActiveRoutes(['product.index', 'product.show']) }}
+```
+
+The `*` wildcard can be used for resource routes, including nested routes.
+
+```php
+{{ Ekko::areActiveRoutes(['user.*', 'user.comments.*']) }}
 ```
 
 #### `areActiveURLs(array $urls, $output = "active")`

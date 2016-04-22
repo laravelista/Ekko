@@ -16,6 +16,8 @@ class Ekko
 
     /**
      * Compares given route name with current route name.
+     * Any section of the route name can be replaced with a * wildcard.
+     * Example: user.*
      *
      * @param  string  $routeName
      * @param  string  $output
@@ -23,7 +25,15 @@ class Ekko
      */
     public function isActiveRoute($routeName, $output = "active")
     {
-        if ($this->route->currentRouteName() == $routeName) {
+        if (strpos($routeName, '*') !== false) {
+            // Quote all RE characters, then undo the quoted '*' characters to match any
+            // sequence of non-'.' characters.
+            $regex = '/^' . str_replace(preg_quote('*'), '[^.]*?', preg_quote($routeName, '/')) . '$/';
+            if (preg_match($regex, $this->route->currentRouteName())) {
+                return $output;
+            }
+
+        } elseif ($this->route->currentRouteName() == $routeName) {
             return $output;
         }
 
