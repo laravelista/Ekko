@@ -67,7 +67,7 @@ class Ekko {
     {
         foreach($routeNames as $routeName)
         {
-            if(Route::currentRouteName() == $routeName) return $output;
+            if($this->isActiveRoute($routeName, 'true')) return $output;
         }
 
         return null;
