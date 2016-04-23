@@ -1,6 +1,7 @@
 <?php namespace Laravelista\Ekko;
 
 use Illuminate\Support\ServiceProvider;
+use Laravelista\Ekko\Ekko;
 
 class EkkoServiceProvider extends ServiceProvider
 {
@@ -18,11 +19,11 @@ class EkkoServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('ekko', function () {
+        $this->app->singleton(Ekko::class, function ($app) {
             return new Ekko(
-                $this->app['router'],
-                $this->app['url']
-                );
+                $app['router'],
+                $app['url']
+            );
         });
     }
 
