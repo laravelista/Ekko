@@ -19,7 +19,7 @@ class EkkoServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('ekko', function ($app) {
+        $this->app->singleton(Ekko::class, function ($app) {
             return new Ekko(
                 $app['router'],
                 $app['url']
@@ -34,6 +34,6 @@ class EkkoServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['ekko'];
+        return [Ekko::class];
     }
 }
