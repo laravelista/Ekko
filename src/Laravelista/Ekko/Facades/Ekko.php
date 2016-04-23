@@ -8,7 +8,7 @@ class Ekko extends Facade
 
     protected static function getFacadeAccessor()
     {
-        return Ekko::class;
+        return 'ekko';
     }
 
 }
