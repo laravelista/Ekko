@@ -66,4 +66,43 @@ class EkkoTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(null, $ekko->isActiveMatch('under-the-rainbow', 'hello'));
     }
 
+    /** @test */
+    public function it_detects_active_routes_by_name()
+    {
+        $router = m::mock(\Illuminate\Routing\Router::class);
+        $router->shouldReceive('currentRouteName')->times(8)->andReturn('users.index');
+
+        $url = m::mock(\Illuminate\Routing\UrlGenerator::class);
+
+        $ekko = new Ekko($router, $url);
+
+        $this->assertEquals("active", $ekko->areActiveRoutes(['users.index']));
+        $this->assertEquals("hello", $ekko->areActiveRoutes(['users.index'], 'hello'));
+        $this->assertEquals(null, $ekko->areActiveRoutes(['clients.index']));
+        $this->assertEquals(null, $ekko->areActiveRoutes(['clients.index'], 'hello'));
+
+        // Wildcard support
+        $this->assertEquals("active", $ekko->areActiveRoutes(['users.*']));
+        $this->assertEquals("hello", $ekko->areActiveRoutes(['users.*'], 'hello'));
+        $this->assertEquals(null, $ekko->areActiveRoutes(['clients.*']));
+        $this->assertEquals(null, $ekko->areActiveRoutes(['clients.*'], 'hello'));
+    }
+
+    /** @test */
+    public function it_detects_active_routes_by_url()
+    {
+        $router = m::mock(\Illuminate\Routing\Router::class);
+
+        $url = m::mock(\Illuminate\Routing\UrlGenerator::class);
+        $url->shouldReceive('current')->times(4)->andReturn('/users');
+        $url->shouldReceive('to')->times(4)->andReturn('/users', '/users', 'users', '/users/preview');
+
+        $ekko = new Ekko($router, $url);
+
+        $this->assertEquals("active", $ekko->areActiveURLs(['/users']));
+        $this->assertEquals("hello", $ekko->areActiveURLs(['/users'], 'hello'));
+        $this->assertEquals(null, $ekko->areActiveURLs(['users']));
+        $this->assertEquals(null, $ekko->areActiveURLs(['/users/preview'], 'hello'));
+    }
+
 }
