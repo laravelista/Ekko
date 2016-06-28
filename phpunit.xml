@@ -15,4 +15,13 @@
             <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+            <exclude>
+                <directory suffix=".php">./src/Laravelista/Ekko/Facades</directory>
+                <file>./src/Laravelista/Ekko/EkkoServiceProvider.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>
