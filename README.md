@@ -122,3 +122,11 @@ Compares given array of URLs with current URL.
 ```php
 {{ Ekko::areActiveURLs(['/product', '/product/create']) }}
 ```
+
+## Helpers
+
+Helper functions are available for all methods. Example:
+
+```php
+{{ isActiveRoute('user.*') }}
+```
