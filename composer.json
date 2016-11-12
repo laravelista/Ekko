@@ -17,7 +17,10 @@
   "autoload": {
     "psr-0": {
       "Laravelista\\Ekko\\": "src/"
-    }
+    },
+    "files" : [
+      "src/Laravelista/Ekko/helpers.php"
+    ]
   },
   "minimum-stability": "stable",
   "require-dev": {
