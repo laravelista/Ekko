@@ -7,7 +7,7 @@ if (!function_exists('isActiveRoute')) {
      * @param        $routeName
      * @param string $output
      *
-     * @return bool
+     * @return string
      */
     function isActiveRoute($routeName, $output = "active")
     {
@@ -20,7 +20,7 @@ if (!function_exists('isActiveURL')) {
      * @param        $url
      * @param string $output
      *
-     * @return bool
+     * @return string
      */
     function isActiveURL($url, $output = "active")
     {
@@ -33,7 +33,7 @@ if (!function_exists('isActiveMatch')) {
      * @param        $string
      * @param string $output
      *
-     * @return bool
+     * @return string
      */
     function isActiveMatch($string, $output = "active")
     {
@@ -46,7 +46,7 @@ if (!function_exists('areActiveRoutes')) {
      * @param array  $routeNames
      * @param string $output
      *
-     * @return bool
+     * @return string
      */
     function areActiveRoutes(array $routeNames, $output = "active")
     {
@@ -59,7 +59,7 @@ if (!function_exists('areActiveURLs')) {
      * @param array  $urls
      * @param string $output
      *
-     * @return bool
+     * @return string
      */
     function areActiveURLs(array $urls, $output = "active")
     {
