@@ -15,7 +15,7 @@ First, pull in the package through Composer.
 
 ```js
 "require": {
-    "laravelista/ekko": "~1.2"
+    "laravelista/ekko": "~1.3"
 }
 ```
 
