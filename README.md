@@ -3,73 +3,97 @@
 [![Latest Stable Version](https://poser.pugx.org/laravelista/ekko/v/stable)](https://packagist.org/packages/laravelista/ekko) [![Total Downloads](https://poser.pugx.org/laravelista/ekko/downloads)](https://packagist.org/packages/laravelista/ekko) [![Latest Unstable Version](https://poser.pugx.org/laravelista/ekko/v/unstable)](https://packagist.org/packages/laravelista/ekko) [![License](https://poser.pugx.org/laravelista/ekko/license)](https://packagist.org/packages/laravelista/ekko)
 [![Build Status](https://travis-ci.org/laravelista/Ekko.svg?branch=master)](https://travis-ci.org/laravelista/Ekko)
 
-![Ekko](./ekko.jpg)
-
-Laravel helper that detects active navigation menu items and applies bootstrap classes.
-
-> I reuse this code across many projects so I wanted a central place for it.
+Laravel package that detects active navigation menu items and applies bootstrap classes.
 
 ## Installation
 
-First, pull in the package through Composer.
+From the command line:
 
-```js
-"require": {
-    "laravelista/ekko": "~1.3"
-}
+```bash
+composer require laravelista/ekko
 ```
 
-And then, if using Laravel 5 or 4, include the service provider within `app/config/app.php`.
+### Laravel 5.*
+
+Include the service provider in `config/app.php`:
 
 ```php
 'providers' => [
-    'Laravelista\Ekko\EkkoServiceProvider'
+    ...,
+    Laravelista\Ekko\EkkoServiceProvider::class
 ];
 ```
 
-And, for convenience, add a facade alias to this same file at the bottom:
+And add a facade alias to this same file at the bottom:
 
 ```php
 'aliases' => [
-    'Ekko' => 'Laravelista\Ekko\Facades\Ekko'
+    ...,
+    'Ekko' => Laravelista\Ekko\Facades\Ekko::class
+];
+```
+
+### Laravel 4.*
+
+Include the service provider in `app/config/app.php`:
+
+```php
+'providers' => [
+    ...,
+    Laravelista\Ekko\EkkoServiceProvider::class
+];
+```
+
+And add a facade alias to this same file at the bottom:
+
+```php
+'aliases' => [
+    'Ekko' => Laravelista\Ekko\Facades\Ekko::class
 ];
 ```
 
 ## Usage
 
-You would most likely use this package in your `navbar` partial like so:
+There are two ways of using this package in your application, by using a facade `Ekko::isActiveURL('/about')` or using a helper function `isActiveURL('/about')`.
+
+Most of the time you will use this package in your navigation partial like so:
 
 ```php
+<ul>
 <li>
-    <a href="{{ route('home') }}" class="{{ Ekko::isActiveRoute('home') }}">
-        <i class="halflings white home"></i> Home
+    <a class="{{ isActiveRoute('home') }}" href="{{ route('home') }}">
+        Home
     </a>
 </li>
-
 <li>
-    <a href="#" class="{{ Ekko::areActiveRoutes(['murter', 'kornati']) }}">
-        <i class="halflings white screenshot"></i> Location
+    <a class="{{ isActiveURL('/about') }}" href="{{ url('/about') }}">
+        About
+    </a>
+</li>
+<li>
+    <a class="{{ isActiveRoute('destinations.*') }}" href="{{ route('destinations.index') }}">
+        Destinations
+    </a>
+</li>
+<li>
+    <a href="#" class="{{ areActiveRoutes(['terms', 'privacy']) }}">
+        Info
     </a>
     <ul>
         <li>
-            <a href="{{ route('murter') }}">Murter</a>
+            <a href="{{ route('terms') }}">Terms and Conditions</a>
         </li>
         <li>
-            <a href="{{ route('kornati') }}">Kornati</a>
+            <a href="{{ route('privacy') }}">Privacy Policy</a>
         </li>
     </ul>
 </li>
-
-<li>
-    <a href="{{ route('trips.index') }}" class="{{ Ekko::isActiveMatch('trips') }}">
-        <i class="halflings white road"></i> Trips
-    </a>
-</li>
+</ul>
 ```
 
 ## API
 
-As the second parameter to any method, you can pass the value you want to get returned if there was a match. *By default this is `active` which is Bootstrap default.*
+As the second parameter to any method, you can pass the value you want to get returned if there was a match. *By default this is `active` which is Bootstrap default, but you can replace it with `true` or `false` depending on your needs.*
 
 #### `isActiveRoute($routeName, $output = "active")`
 
