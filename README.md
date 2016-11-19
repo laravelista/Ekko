@@ -1,64 +1,19 @@
 # Ekko
 
-[![Latest Stable Version](https://poser.pugx.org/laravelista/ekko/v/stable)](https://packagist.org/packages/laravelista/ekko) [![Total Downloads](https://poser.pugx.org/laravelista/ekko/downloads)](https://packagist.org/packages/laravelista/ekko) [![Latest Unstable Version](https://poser.pugx.org/laravelista/ekko/v/unstable)](https://packagist.org/packages/laravelista/ekko) [![License](https://poser.pugx.org/laravelista/ekko/license)](https://packagist.org/packages/laravelista/ekko)
+[![Latest Stable Version](https://poser.pugx.org/laravelista/ekko/v/stable)](https://packagist.org/packages/laravelista/ekko) [![Total Downloads](https://poser.pugx.org/laravelista/ekko/downloads)](https://packagist.org/packages/laravelista/ekko) [![License](https://poser.pugx.org/laravelista/ekko/license)](https://packagist.org/packages/laravelista/ekko)
 [![Build Status](https://travis-ci.org/laravelista/Ekko.svg?branch=master)](https://travis-ci.org/laravelista/Ekko)
 
 Laravel package for marking navigation menu items active.
 
-## Installation
+![Ekko](ekko.jpg)
 
-From the command line:
-
-```bash
-composer require laravelista/ekko
-```
-
-### Laravel 5.*
-
-Include the service provider in `config/app.php`:
-
-```php
-'providers' => [
-    ...,
-    Laravelista\Ekko\EkkoServiceProvider::class
-];
-```
-
-And add a facade alias to this same file at the bottom:
-
-```php
-'aliases' => [
-    ...,
-    'Ekko' => Laravelista\Ekko\Facades\Ekko::class
-];
-```
-
-### Laravel 4.*
-
-Include the service provider in `app/config/app.php`:
-
-```php
-'providers' => [
-    ...,
-    Laravelista\Ekko\EkkoServiceProvider::class
-];
-```
-
-And add a facade alias to this same file at the bottom:
-
-```php
-'aliases' => [
-    'Ekko' => Laravelista\Ekko\Facades\Ekko::class
-];
-```
-
-## Usage
+## Sample Usage
 
 There are two ways of using this package in your application, by using a facade `Ekko::isActiveURL('/about')` or using a helper function `isActiveURL('/about')`.
 
 Most of the time you will use this package in your navigation partial like so:
 
-```php
+```html
 <ul>
 <li>
     <a class="{{ isActiveRoute('home') }}" href="{{ route('home') }}">
@@ -89,6 +44,53 @@ Most of the time you will use this package in your navigation partial like so:
     </ul>
 </li>
 </ul>
+```
+
+## Installation
+
+From the command line:
+
+```bash
+composer require laravelista/ekko
+```
+
+### Laravel 5.* specifics
+
+Include the service provider in `config/app.php`:
+
+```php
+'providers' => [
+    ...,
+    Laravelista\Ekko\EkkoServiceProvider::class
+];
+```
+
+And add a facade alias to this same file at the bottom:
+
+```php
+'aliases' => [
+    ...,
+    'Ekko' => Laravelista\Ekko\Facades\Ekko::class
+];
+```
+
+### Laravel 4.* specifics
+
+Include the service provider in `app/config/app.php`:
+
+```php
+'providers' => [
+    ...,
+    Laravelista\Ekko\EkkoServiceProvider::class
+];
+```
+
+And add a facade alias to this same file at the bottom:
+
+```php
+'aliases' => [
+    'Ekko' => Laravelista\Ekko\Facades\Ekko::class
+];
 ```
 
 ## API
