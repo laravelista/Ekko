@@ -96,49 +96,63 @@ isActiveRoute($routeName, $output = "active")
 
 **Examples:**
 
-If the current route is `home`, function `{{ isActiveRoute('home') }}` would return *string* `active`.
+If the current route is `home`, function `isActiveRoute('home')` would return *string* `active`.
 
 _The `*` wildcard can be used for resource routes._
 
-`{{ isActiveRoute('user.*') }}` would return *string* `active` for any route which begins with `user`.
+Function `isActiveRoute('user.*')` would return *string* `active` for any current route which begins with `user`.
 
-### `isActiveURL($url, $output = "active")`
+### isActiveURL
 
 Compares given URL with current URL.
 
 ```php
-{{ Ekko::isActiveURL('/about') }}
+isActiveURL($url, $output = "active")
 ```
 
-### `isActiveMatch($string, $output = "active")`
+**Examples:**
+
+If the current URL is `/about`, function `isActiveURL('/about')` would return *string* `active`.
+
+### isActiveMatch
 
 Detects if the given string is found in the current URL.
 
 ```php
-{{ Ekko::isActiveMatch('bout') }}
+isActiveMatch($string, $output = "active")
 ```
 
-### `areActiveRoutes(array $routeNames, $output = "active")`
+**Examples:**
+
+If the current URL is `/about` or `/insideout`, function `isActiveMatch('out')` would return *string* `active`.
+
+### areActiveRoutes
 
 Compares given array of route names with current route name.
 
 ```php
-{{ Ekko::areActiveRoutes(['product.index', 'product.show']) }}
+areActiveRoutes(array $routeNames, $output = "active")
 ```
 
-The `*` wildcard can be used for resource routes, including nested routes.
+**Examples:**
 
-```php
-{{ Ekko::areActiveRoutes(['user.*', 'user.comments.*']) }}
-```
+If the current route is `product.index` or `product.show`, function `areActiveRoutes(['product.index', 'product.show'])` would return *string* `active`.
 
-### `areActiveURLs(array $urls, $output = "active")`
+_The `*` wildcard can be used for resource routes, including nested routes._
+
+Function `areActiveRoutes(['user.*', 'product.*'])` would return *string* `active` for any current route which begins with `user` or `product`.
+
+### areActiveURLs
 
 Compares given array of URLs with current URL.
 
 ```php
-{{ Ekko::areActiveURLs(['/product', '/product/create']) }}
+areActiveURLs(array $urls, $output = "active")
 ```
+
+**Examples:**
+
+If the current URL is `/product` or `/product/create`, function `areActiveURLs(['/product', '/product/create'])` would return *string* `active`.
 
 ## Credits
 
