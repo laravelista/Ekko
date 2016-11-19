@@ -86,19 +86,21 @@ And add a facade alias to the same file at the bottom:
 
 There are two ways of using Ekko in your application, by using a facade `Ekko::isActiveURL('/about')` or by using a helper function `isActiveURL('/about')`.
 
-### `isActiveRoute($routeName, $output = "active")`
+### isActiveRoute
 
 Compares given route name with current route name.
 
 ```php
-{{ Ekko::isActiveRoute('home') }}
+isActiveRoute($routeName, $output = "active")
 ```
 
-The `*` wildcard can be used for resource routes.
+**Examples:**
 
-```php
-{{ Ekko::isActiveRoute('user.*') }}
-```
+If the current route is `home`, function `{{ isActiveRoute('home') }}` would return *string* `active`.
+
+_The `*` wildcard can be used for resource routes._
+
+`{{ isActiveRoute('user.*') }}` would return *string* `active` for any route which begins with `user`.
 
 ### `isActiveURL($url, $output = "active")`
 
