@@ -10,6 +10,8 @@
 
 Ekko is a Laravel helper package. It helps you mark currently active menu item in your navbar.
 
+## Overview
+
 To mark a menu item active in [Bootstrap](http://getbootstrap.com/components/#navbar), you need to add a `active` CSS class to the `<li>` tag:
 
 ```html
