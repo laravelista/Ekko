@@ -1,8 +1,6 @@
 # Ekko
 
-[![Latest Stable Version](https://poser.pugx.org/laravelista/ekko/v/stable)](https://packagist.org/packages/laravelista/ekko)
-[![Total Downloads](https://poser.pugx.org/laravelista/ekko/downloads)](https://packagist.org/packages/laravelista/ekko)
-[![Build Status](https://travis-ci.org/laravelista/Ekko.svg?branch=master)](https://travis-ci.org/laravelista/Ekko)
+[![Latest Stable Version](https://poser.pugx.org/laravelista/ekko/v/stable)](https://packagist.org/packages/laravelista/ekko) [![Total Downloads](https://poser.pugx.org/laravelista/ekko/downloads)](https://packagist.org/packages/laravelista/ekko) [![Build Status](https://travis-ci.org/laravelista/Ekko.svg?branch=master)](https://travis-ci.org/laravelista/Ekko)
 
 Ekko is a Laravel helper package. It helps you mark currently active menu item in your navbar.
 
@@ -17,7 +15,7 @@ To mark a menu item active in [Bootstrap](http://getbootstrap.com/components/#na
 
 You could do it manually with Laravel, but you will end up with a sausage:
 
-```php
+```html
 <ul class="nav navbar-nav">
     <li class="@if(URL::current() == URL::to('/')) active @endif"><a href="/">Home</a></li>
     <li><a href="/about">About</a></li>
@@ -26,7 +24,7 @@ You could do it manually with Laravel, but you will end up with a sausage:
 
 With Ekko your code will look like this:
 
-```php
+```html
 <ul class="nav navbar-nav">
     <li class="{{ isActiveURL('/') }}"><a href="/">Home</a></li>
     <li><a href="/about">About</a></li>
@@ -35,7 +33,7 @@ With Ekko your code will look like this:
 
 What if you are not using Bootstrap, but some other framework or a custom design? Instead of returning `active` CSS class, you can make Ekko return anything you want including boolean `true` or `false`:
 
-```php
+```html
 <ul class="nav navbar-nav">
     <li class="{{ isActiveURL('/', 'highlight') }}"><a href="/">Home</a></li>
     <li><a href="/about">About</a></li>
@@ -80,7 +78,7 @@ And add a facade alias to the same file at the bottom:
 
 There are two ways of using Ekko in your application, by using a facade `Ekko::isActiveURL('/about')` or by using a helper function `isActiveURL('/about')`.
 
-#### `isActiveRoute($routeName, $output = "active")`
+### `isActiveRoute($routeName, $output = "active")`
 
 Compares given route name with current route name.
 
@@ -94,7 +92,7 @@ The `*` wildcard can be used for resource routes.
 {{ Ekko::isActiveRoute('user.*') }}
 ```
 
-#### `isActiveURL($url, $output = "active")`
+### `isActiveURL($url, $output = "active")`
 
 Compares given URL with current URL.
 
@@ -102,7 +100,7 @@ Compares given URL with current URL.
 {{ Ekko::isActiveURL('/about') }}
 ```
 
-#### `isActiveMatch($string, $output = "active")`
+### `isActiveMatch($string, $output = "active")`
 
 Detects if the given string is found in the current URL.
 
@@ -110,7 +108,7 @@ Detects if the given string is found in the current URL.
 {{ Ekko::isActiveMatch('bout') }}
 ```
 
-#### `areActiveRoutes(array $routeNames, $output = "active")`
+### `areActiveRoutes(array $routeNames, $output = "active")`
 
 Compares given array of route names with current route name.
 
@@ -124,7 +122,7 @@ The `*` wildcard can be used for resource routes, including nested routes.
 {{ Ekko::areActiveRoutes(['user.*', 'user.comments.*']) }}
 ```
 
-#### `areActiveURLs(array $urls, $output = "active")`
+### `areActiveURLs(array $urls, $output = "active")`
 
 Compares given array of URLs with current URL.
 
