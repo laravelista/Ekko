@@ -1,7 +1,5 @@
 # Ekko
 
-[![Latest Stable Version](https://poser.pugx.org/laravelista/ekko/v/stable)](https://packagist.org/packages/laravelista/ekko) [![Total Downloads](https://poser.pugx.org/laravelista/ekko/downloads)](https://packagist.org/packages/laravelista/ekko) [![Build Status](https://travis-ci.org/laravelista/Ekko.svg?branch=master)](https://travis-ci.org/laravelista/Ekko)
-
 Ekko is a Laravel helper package. It helps you mark currently active menu item in your navbar.
 
 To mark a menu item active in [Bootstrap](http://getbootstrap.com/components/#navbar), you need to add a `active` CSS class to the `<li>` tag:
@@ -42,7 +40,7 @@ What if you are not using Bootstrap, but some other framework or a custom design
 
 Using boolean `true` or `false` is convenient if you need to display some content depending on which page you are in your layout view:
 
-```php
+```html
 @if(isActiveRoute('home', true))
     <p>Something that is only visible on the `home` route.</p>
 @endif
