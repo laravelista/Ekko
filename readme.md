@@ -104,7 +104,7 @@ Function `isActiveRoute('user.*')` would return *string* `active` for any curren
 
 ### isActiveURL
 
-Compares given URL with current URL.
+Compares given URL path with current URL path.
 
 ```php
 isActiveURL($url, $output = "active")
@@ -112,7 +112,7 @@ isActiveURL($url, $output = "active")
 
 **Examples:**
 
-If the current URL is `/about`, function `isActiveURL('/about')` would return *string* `active`.
+If the current URL path is `/about`, function `isActiveURL('/about')` would return *string* `active`.
 
 ### isActiveMatch
 
@@ -124,7 +124,7 @@ isActiveMatch($string, $output = "active")
 
 **Examples:**
 
-If the current URL is `/about` or `/insideout`, function `isActiveMatch('out')` would return *string* `active`.
+If the current URL path is `/about` or `/insideout`, function `isActiveMatch('out')` would return *string* `active`.
 
 ### areActiveRoutes
 
@@ -144,7 +144,7 @@ Function `areActiveRoutes(['user.*', 'product.*'])` would return *string* `activ
 
 ### areActiveURLs
 
-Compares given array of URLs with current URL.
+Compares given array of URL paths with current URL path.
 
 ```php
 areActiveURLs(array $urls, $output = "active")
@@ -152,7 +152,7 @@ areActiveURLs(array $urls, $output = "active")
 
 **Examples:**
 
-If the current URL is `/product` or `/product/create`, function `areActiveURLs(['/product', '/product/create'])` would return *string* `active`.
+If the current URL path is `/product` or `/product/create`, function `areActiveURLs(['/product', '/product/create'])` would return *string* `active`.
 
 ## Credits
 
