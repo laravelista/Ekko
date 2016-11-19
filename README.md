@@ -1,49 +1,53 @@
 # Ekko
 
-[![Latest Stable Version](https://poser.pugx.org/laravelista/ekko/v/stable)](https://packagist.org/packages/laravelista/ekko) [![Total Downloads](https://poser.pugx.org/laravelista/ekko/downloads)](https://packagist.org/packages/laravelista/ekko) [![License](https://poser.pugx.org/laravelista/ekko/license)](https://packagist.org/packages/laravelista/ekko)
+[![Latest Stable Version](https://poser.pugx.org/laravelista/ekko/v/stable)](https://packagist.org/packages/laravelista/ekko)
+[![Total Downloads](https://poser.pugx.org/laravelista/ekko/downloads)](https://packagist.org/packages/laravelista/ekko)
 [![Build Status](https://travis-ci.org/laravelista/Ekko.svg?branch=master)](https://travis-ci.org/laravelista/Ekko)
 
-Laravel package for marking navigation menu items active.
+Ekko is a Laravel helper package. It helps you mark currently active menu item in your navbar.
 
-![Ekko](ekko.jpg)
-
-## Sample Usage
-
-There are two ways of using this package in your application, by using a facade `Ekko::isActiveURL('/about')` or using a helper function `isActiveURL('/about')`.
-
-Most of the time you will use this package in your navigation partial like so:
+To mark a menu item active in [Bootstrap](http://getbootstrap.com/components/#navbar), you need to add a `active` CSS class to the `<li>` tag:
 
 ```html
-<ul>
-<li>
-    <a class="{{ isActiveRoute('home') }}" href="{{ route('home') }}">
-        Home
-    </a>
-</li>
-<li>
-    <a class="{{ isActiveURL('/about') }}" href="{{ url('/about') }}">
-        About
-    </a>
-</li>
-<li>
-    <a class="{{ isActiveRoute('destinations.*') }}" href="{{ route('destinations.index') }}">
-        Destinations
-    </a>
-</li>
-<li>
-    <a href="#" class="{{ areActiveRoutes(['terms', 'privacy']) }}">
-        Info
-    </a>
-    <ul>
-        <li>
-            <a href="{{ route('terms') }}">Terms and Conditions</a>
-        </li>
-        <li>
-            <a href="{{ route('privacy') }}">Privacy Policy</a>
-        </li>
-    </ul>
-</li>
+<ul class="nav navbar-nav">
+    <li class="active"><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
 </ul>
+```
+
+You could do it manually with Laravel, but you will end up with a sausage:
+
+```php
+<ul class="nav navbar-nav">
+    <li class="@if(URL::current() == URL::to('/')) active @endif"><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+</ul>
+```
+
+With Ekko your code will look like this:
+
+```php
+<ul class="nav navbar-nav">
+    <li class="{{ isActiveURL('/') }}"><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+</ul>
+```
+
+What if you are not using Bootstrap, but some other framework or a custom design? Instead of returning `active` CSS class, you can make Ekko return anything you want including boolean `true` or `false`:
+
+```php
+<ul class="nav navbar-nav">
+    <li class="{{ isActiveURL('/', 'highlight') }}"><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+</ul>
+```
+
+Using boolean `true` or `false` is convenient if you need to display some content depending on which page you are in your layout view:
+
+```php
+@if(isActiveRoute('home', true))
+    <p>Something that is only visible on the `home` route.</p>
+@endif
 ```
 
 ## Installation
@@ -54,8 +58,6 @@ From the command line:
 composer require laravelista/ekko
 ```
 
-### Laravel 5.* specifics
-
 Include the service provider in `config/app.php`:
 
 ```php
@@ -65,37 +67,18 @@ Include the service provider in `config/app.php`:
 ];
 ```
 
-And add a facade alias to this same file at the bottom:
+And add a facade alias to the same file at the bottom:
 
 ```php
 'aliases' => [
     ...,
-    'Ekko' => Laravelista\Ekko\Facades\Ekko::class
-];
-```
-
-### Laravel 4.* specifics
-
-Include the service provider in `app/config/app.php`:
-
-```php
-'providers' => [
-    ...,
-    Laravelista\Ekko\EkkoServiceProvider::class
-];
-```
-
-And add a facade alias to this same file at the bottom:
-
-```php
-'aliases' => [
     'Ekko' => Laravelista\Ekko\Facades\Ekko::class
 ];
 ```
 
 ## API
 
-As the second parameter to any method, you can pass the value you want to get returned if there was a match. *By default this is `active` which is Bootstrap default, but you can replace it with `true` or `false` depending on your needs.*
+There are two ways of using Ekko in your application, by using a facade `Ekko::isActiveURL('/about')` or by using a helper function `isActiveURL('/about')`.
 
 #### `isActiveRoute($routeName, $output = "active")`
 
@@ -149,10 +132,9 @@ Compares given array of URLs with current URL.
 {{ Ekko::areActiveURLs(['/product', '/product/create']) }}
 ```
 
-## Helpers
+## Credits
 
-Helper functions are available for all methods. Example:
+Many thanks to:
 
-```php
-{{ isActiveRoute('user.*') }}
-```
+- [@Jono20201](https://github.com/Jono20201) for implementing helper functions
+- [@judgej](https://github.com/judgej) for implementing route wildcards
