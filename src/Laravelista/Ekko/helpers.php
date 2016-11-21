@@ -50,7 +50,7 @@ if (!function_exists('areActiveRoutes')) {
      */
     function areActiveRoutes(array $routeNames, $output = "active")
     {
-        return app(Ekko::class)->areActiveRoutes($string, $output);
+        return app(Ekko::class)->areActiveRoutes($routeNames, $output);
     }
 }
 
