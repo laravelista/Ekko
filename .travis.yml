@@ -8,4 +8,5 @@ before_script:
   - travis_retry composer self-update
   - travis_retry composer install --prefer-dist --no-interaction --dev
 
-script: phpunit
+script: 
+  - vendor/bin/phpunit
