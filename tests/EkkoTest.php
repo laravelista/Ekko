@@ -87,6 +87,23 @@ class EkkoTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(null, $ekko->areActiveRoutes(['clients.*']));
         $this->assertEquals(null, $ekko->areActiveRoutes(['clients.*'], 'hello'));
     }
+    
+    /** @test */
+    public function it_detects_deep_active_routes_by_name()
+    {
+        $router = m::mock(\Illuminate\Routing\Router::class);
+        $router->shouldReceive('currentRouteName')->times(4)->andReturn('frontend.users.show.stats');
+
+        $url = m::mock(\Illuminate\Routing\UrlGenerator::class);
+
+        $ekko = new Ekko($router, $url);
+
+        // Wildcard support
+        $this->assertEquals("active", $ekko->areActiveRoutes(['frontend.users.*']));
+        $this->assertEquals("hello", $ekko->areActiveRoutes(['frontend.users.*'], 'hello'));
+        $this->assertEquals(null, $ekko->areActiveRoutes(['clients.*']));
+        $this->assertEquals(null, $ekko->areActiveRoutes(['clients.*'], 'hello'));
+    }
 
     /** @test */
     public function it_detects_active_routes_by_url()
