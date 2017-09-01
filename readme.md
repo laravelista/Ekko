@@ -64,7 +64,9 @@ From the command line:
 composer require laravelista/ekko
 ```
 
-Include the service provider in `config/app.php`:
+Laravel 5.5+ will use auto-discovery function.
+
+If using 5.4 (or not using auto-discovery) you will need to include the service providers / facade in `app/config/app.php`:
 
 ```php
 'providers' => [
