@@ -10,6 +10,34 @@
 
 Ekko is a Laravel helper package. It helps you mark currently active menu item in your navbar.
 
+## Installation
+
+From the command line:
+
+```bash
+composer require laravelista/ekko
+```
+
+Laravel 5.5+ will use the auto-discovery function.
+
+If using 5.4 (or if you are not using auto-discovery) you will need to include the service providers / facade in `config/app.php`:
+
+```php
+'providers' => [
+    ...,
+    Laravelista\Ekko\EkkoServiceProvider::class
+];
+```
+
+And add a facade alias to the same file at the bottom:
+
+```php
+'aliases' => [
+    ...,
+    'Ekko' => Laravelista\Ekko\Facades\Ekko::class
+];
+```
+
 ## Overview
 
 To mark a menu item active in [Bootstrap](http://getbootstrap.com/components/#navbar), you need to add a `active` CSS class to the `<li>` tag:
@@ -54,32 +82,6 @@ Using boolean `true` or `false` is convenient if you need to display some conten
 @if(isActiveRoute('home', true))
     <p>Something that is only visible on the `home` route.</p>
 @endif
-```
-
-## Installation
-
-From the command line:
-
-```bash
-composer require laravelista/ekko
-```
-
-Include the service provider in `config/app.php`:
-
-```php
-'providers' => [
-    ...,
-    Laravelista\Ekko\EkkoServiceProvider::class
-];
-```
-
-And add a facade alias to the same file at the bottom:
-
-```php
-'aliases' => [
-    ...,
-    'Ekko' => Laravelista\Ekko\Facades\Ekko::class
-];
 ```
 
 ## API
