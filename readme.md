@@ -86,14 +86,18 @@ Using boolean `true` or `false` is convenient if you need to display some conten
 
 ## API
 
-There are two ways of using Ekko in your application, by using a facade `Ekko::isActiveURL('/about')` or by using a helper function `isActiveURL('/about')`.
+There are two ways of using Ekko in your application, by using a facade `Ekko::isActiveURL('/about')` or by using a helper function `isActiveURL('/about')` or `is_active_route('/about')`.
 
-### isActiveRoute
+### isActiveRoute, is_active_route
 
 Compares given route name with current route name.
 
 ```php
 isActiveRoute($routeName, $output = "active")
+```
+
+```php
+is_active_route($routeName, $output = "active")
 ```
 
 **Examples:**
@@ -104,7 +108,7 @@ _The `*` wildcard can be used for resource routes._
 
 Function `isActiveRoute('user.*')` would return *string* `active` for any current route which begins with `user`.
 
-### isActiveURL
+### isActiveURL, is_active_url
 
 Compares given URL path with current URL path.
 
@@ -112,11 +116,15 @@ Compares given URL path with current URL path.
 isActiveURL($url, $output = "active")
 ```
 
+```php
+is_active_url($url, $output = "active")
+```
+
 **Examples:**
 
 If the current URL path is `/about`, function `isActiveURL('/about')` would return *string* `active`.
 
-### isActiveMatch
+### isActiveMatch, is_active_match
 
 Detects if the given string is found in the current URL.
 
@@ -124,16 +132,24 @@ Detects if the given string is found in the current URL.
 isActiveMatch($string, $output = "active")
 ```
 
+```php
+is_active_match($string, $output = "active")
+```
+
 **Examples:**
 
 If the current URL path is `/about` or `/insideout`, function `isActiveMatch('out')` would return *string* `active`.
 
-### areActiveRoutes
+### areActiveRoutes, are_active_routes
 
 Compares given array of route names with current route name.
 
 ```php
 areActiveRoutes(array $routeNames, $output = "active")
+```
+
+```php
+are_active_routes(array $routeNames, $output = "active")
 ```
 
 **Examples:**
@@ -144,12 +160,16 @@ _The `*` wildcard can be used for resource routes, including nested routes._
 
 Function `areActiveRoutes(['user.*', 'product.*'])` would return *string* `active` for any current route which begins with `user` or `product`.
 
-### areActiveURLs
+### areActiveURLs, are_active_urls
 
 Compares given array of URL paths with current URL path.
 
 ```php
 areActiveURLs(array $urls, $output = "active")
+```
+
+```php
+are_active_urls(array $urls, $output = "active")
 ```
 
 **Examples:**
