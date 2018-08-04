@@ -1,13 +1,8 @@
 # Ekko
 
-[![Latest Stable Version](https://poser.pugx.org/laravelista/ekko/v/stable)](https://packagist.org/packages/laravelista/ekko)
-[![Total Downloads](https://poser.pugx.org/laravelista/ekko/downloads)](https://packagist.org/packages/laravelista/ekko)
-[![License](https://poser.pugx.org/laravelista/ekko/license)](https://packagist.org/packages/laravelista/ekko)
-[![Build Status](https://travis-ci.org/laravelista/Ekko.svg?branch=master)](https://travis-ci.org/laravelista/Ekko)
+Ekko is a Laravel helper package. It helps you mark currently active menu item in your navbar.
 
 [![Become a Patron](https://img.shields.io/badge/Becoma%20a-Patron-f96854.svg?style=for-the-badge)](https://www.patreon.com/shockmario)
-
-Ekko is a Laravel helper package. It helps you mark currently active menu item in your navbar.
 
 ## Installation
 
