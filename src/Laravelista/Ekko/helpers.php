@@ -80,6 +80,27 @@ if (!function_exists('is_active_match')) {
     }
 }
 
+if (!function_exists('are_active_match')) {
+    /**
+     * Detects if the given string array is found in the current URL.
+     *
+     * @param array  $matches
+     * @param string $output
+     *
+     * @return string
+     */
+    function are_active_match($matches, $output = "active")
+    {
+        foreach($matches as $match){
+            if(isActiveMatch($match)){
+                return $output;
+            }
+        }
+
+        return null;
+    }
+}
+
 if (!function_exists('areActiveRoutes')) {
     /**
      * @param array  $routeNames
