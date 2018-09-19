@@ -134,6 +134,14 @@ is_active_match($string, $output = "active")
 
 If the current URL path is `/about` or `/insideout`, function `isActiveMatch('out')` would return *string* `active`.
 
+### are_active_match
+
+Detects if the given strings in array are found in the current URL
+
+```php
+are_active_match($matches, $output = "active")
+```
+
 ### areActiveRoutes, are_active_routes
 
 Compares given array of route names with current route name.
