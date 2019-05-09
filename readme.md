@@ -1,8 +1,8 @@
 # Ekko
 
-Ekko is a Laravel helper package. It helps you mark currently active menu item in your navbar.
+Laravel package for marking navigation items active.
 
-[![Become a Patron](https://img.shields.io/badge/Becoma%20a-Patron-f96854.svg?style=for-the-badge)](https://www.patreon.com/shockmario)
+[![Become a Patron](https://img.shields.io/badge/Becoma%20a-Patron-f96854.svg?style=for-the-badge)](https://www.patreon.com/laravelista)
 
 ## Installation
 
