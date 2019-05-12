@@ -2,7 +2,7 @@
 
 PHP function for marking navigation items active.
 
-[![Become a Patron](https://img.shields.io/badge/Becoma%20a-Patron-f96854.svg?style=for-the-badge)](https://www.patreon.com/laravelista)
+[![Become a Patron](https://img.shields.io/badge/Become%20a-Patron-f96854.svg?style=for-the-badge)](https://www.patreon.com/laravelista)
 
 > Starting with version `2.0.0`, there is no backward compatibility with the previous releases.
 
