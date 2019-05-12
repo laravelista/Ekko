@@ -1,10 +1,12 @@
 # Ekko
 
-PHP function for marking navigation items active. The default output value is for [Bootstrap](http://getbootstrap.com), but it can be changed to anything.
+PHP function for marking navigation items active.
 
 [![Become a Patron](https://img.shields.io/badge/Becoma%20a-Patron-f96854.svg?style=for-the-badge)](https://www.patreon.com/laravelista)
 
 > Starting with version `2.0.0`, there is no backward compatibility with the previous releases.
+
+The default output value is for [Bootstrap](http://getbootstrap.com), but it can be changed to anything.
 
 ## Installation
 
