@@ -14,8 +14,8 @@ The default output value is for [Bootstrap](http://getbootstrap.com), but it can
 - Five lines of code
 - Framework agnostic
 - Supports wildcards & arrays
-- Tested
 - Documented
+- Tested
 
 ## Installation
 
