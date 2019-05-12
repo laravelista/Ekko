@@ -8,9 +8,12 @@ PHP function for marking navigation items active.
 
 The default output value is for [Bootstrap](http://getbootstrap.com), but it can be changed to anything.
 
+## Features
+
 - Single function
 - Five lines of code
 - Framework agnostic
+- Supports wildcards & arrays
 - Tested
 - Documented
 
