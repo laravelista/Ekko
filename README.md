@@ -97,6 +97,11 @@ You can combine "Static" and "Dynamic" in an array.
 
 Many thanks to:
 
-- [@Jono20201](https://github.com/Jono20201) for helper functions.
 - [@judgej](https://github.com/judgej) for route wildcards.
+- [@Jono20201](https://github.com/Jono20201) for helper functions.
+- [@JasonMillward](https://github.com/JasonMillward) for improving wildcards in nested route names.
+- [@it-can](https://github.com/it-can) for Laravel 5.5+ auto-discovery.
+- [@foo99](https://github.com/foo99) for snake_case function names.
 - [@Turboveja](https://github.com/Turboveja) for a PR that I did not merge. Sry.
+
+I know that this new version includes very little of your contributions, but you will not be forgotten. Thank you.
