@@ -1,0 +1,55 @@
+<?php
+
+use PHPUnit\Framework\TestCase;
+use Laravelista\Ekko\Ekko;
+
+class EkkoIsActiveTest extends TestCase
+{
+    protected $ekko;
+
+    protected function setUp(): void
+    {
+        $this->ekko = new Ekko;
+        $this->ekko->setDefaultOutput('active');
+    }
+
+    public function testIsActiveRoot()
+    {
+        $_SERVER['REQUEST_URI'] = '/';
+
+        $this->assertTrue($this->ekko->isActive('/', true));
+        $this->assertTrue($this->ekko->isActive('*', true)); // you can do this, but why?
+
+        $this->assertNull($this->ekko->isActive('/test'));
+        $this->assertNull($this->ekko->isActive(''));
+    }
+
+    public function testIsActiveWildcards()
+    {
+        $_SERVER['REQUEST_URI'] = '/user/3/edit';
+
+        $this->assertTrue($this->ekko->isActive('/user/3/edit', true));
+        $this->assertTrue($this->ekko->isActive('/user/*/edit', true));
+        $this->assertTrue($this->ekko->isActive('/user/3/*', true));
+        $this->assertTrue($this->ekko->isActive('/user/*', true));
+        $this->assertTrue($this->ekko->isActive('/user*', true));
+
+        $this->assertNull($this->ekko->isActive('/user'));
+        $this->assertNull($this->ekko->isActive('/user/3'));
+        $this->assertNull($this->ekko->isActive('/user/3/'));
+    }
+
+    public function testIsActiveMatches()
+    {
+        $_SERVER['REQUEST_URI'] = '/article/a-brown-fox-jumps-over-a-burning-bridge';
+
+        $this->assertTrue($this->ekko->isActive('*fox*', true));
+        $this->assertTrue($this->ekko->isActive('*fox*bridge', true));
+        $this->assertTrue($this->ekko->isActive('*bridge', true));
+        $this->assertTrue($this->ekko->isActive('/article/*', true));
+
+        $this->assertNull($this->ekko->isActive('/article'));
+        $this->assertNull($this->ekko->isActive('/a-brown-fox'));
+        $this->assertNull($this->ekko->isActive('bridge'));
+    }
+}
