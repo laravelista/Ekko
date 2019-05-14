@@ -1,8 +1,8 @@
 {
   "name": "laravelista/ekko",
-  "description": "PHP function for marking navigation items active.",
+  "description": "Framework agnostic PHP package for marking navigation items active.",
   "license": "MIT",
-  "keywords": ["php", "function", "active", "bootstrap", "helper"],
+  "keywords": ["php", "function", "active", "bootstrap", "helper", "laravel"],
   "authors": [
       {
           "name": "Mario Bašić",
@@ -20,6 +20,7 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^8",
+    "mockery/mockery": "^1.2",
     "illuminate/support": "^5.8",
     "illuminate/routing": "^5.8"
   },

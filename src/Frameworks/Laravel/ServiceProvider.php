@@ -2,11 +2,10 @@
 
 namespace Laravelista\Ekko\Frameworks\Laravel;
 
-use Illuminate\Support\ServiceProvider;
 use Laravelista\Ekko\Url\LaravelUrlProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 
-class EkkoServiceProvider extends ServiceProvider implements DeferrableProvider
+class ServiceProvider extends \Illuminate\Support\ServiceProvider implements DeferrableProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -28,9 +27,20 @@ class EkkoServiceProvider extends ServiceProvider implements DeferrableProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(
+            __DIR__.'/config.php', 'ekko'
+        );
+
         $this->app->singleton(Ekko::class, function ($app) {
             $ekko = new Ekko($app['router']);
-            $ekko->setUrlProvider(new LaravelUrlProvider($app['url']));
+            $ekko->setUrlProvider(new LaravelUrlProvider($app['request']));
+
+            $ekko->setDefaultOutput(config('ekko.default_output'));
+
+            if (config('ekko.global_helpers')) {
+                $ekko->enableGlobalHelpers();
+            }
+
             return $ekko;
         });
     }
@@ -42,7 +52,9 @@ class EkkoServiceProvider extends ServiceProvider implements DeferrableProvider
      */
     public function boot()
     {
-        //
+        $this->publishes([
+            __DIR__.'/config.php' => config_path('ekko.php'),
+        ]);
     }
 
     /**

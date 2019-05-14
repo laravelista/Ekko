@@ -2,19 +2,21 @@
 
 namespace Laravelista\Ekko\Url;
 
-use Illuminate\Routing\UrlGenerator as Url;
+use Illuminate\Http\Request;
 
 class LaravelUrlProvider implements UrlProviderInterface
 {
-    protected $url;
+    protected $request;
 
-    public function __construct(Url $url)
+    public function __construct(Request $request)
     {
-        $this->url = $url;
+        $this->request = $request;
     }
 
     public function current(): string
     {
-        return $this->url->current();
+        $path = $this->request->getBasePath();
+
+        return empty($path) ? '/' : $path;
     }
 }

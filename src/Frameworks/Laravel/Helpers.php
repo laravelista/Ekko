@@ -7,16 +7,16 @@ use \Laravelista\Ekko\Frameworks\Laravel\Ekko;
  */
 
 if (!function_exists('isActiveRoute')) {
-    function isActiveRoute($routeName, $output = null)
+    function isActiveRoute($input, $output = null)
     {
-        return app(Ekko::class)->isActiveRoute($routeName, $output);
+        return app(Ekko::class)->isActiveRoute($input, $output);
     }
 }
 
 if (!function_exists('is_active_route')) {
-    function is_active_route($routeName, $output = null)
+    function is_active_route($input, $output = null)
     {
-        return app(Ekko::class)->isActiveRoute($routeName, $output);
+        return app(Ekko::class)->isActiveRoute($input, $output);
     }
 }
 
@@ -38,17 +38,27 @@ if (!function_exists('are_active_routes')) {
  * URL
  */
 
-if (!function_exists('isActiveURL')) {
-    function isActiveURL($url, $output = null)
+if (!function_exists('is_active')) {
+    /**
+     * Backward compatibility with v2.
+     */
+    function is_active($input, $output = null)
     {
-        return app(Ekko::class)->isActive($url, $output);
+        return app(Ekko::class)->isActive($input, $output);
+    }
+}
+
+if (!function_exists('isActiveURL')) {
+    function isActiveURL($input, $output = null)
+    {
+        return app(Ekko::class)->isActive($input, $output);
     }
 }
 
 if (!function_exists('is_active_url')) {
-    function is_active_url($url, $output = null)
+    function is_active_url($input, $output = null)
     {
-        return app(Ekko::class)->isActive($url, $output);
+        return app(Ekko::class)->isActive($input, $output);
     }
 }
 

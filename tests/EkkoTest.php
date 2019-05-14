@@ -3,14 +3,13 @@
 use PHPUnit\Framework\TestCase;
 use Laravelista\Ekko\Ekko;
 
-class EkkoIsActiveTest extends TestCase
+class EkkoTest extends TestCase
 {
     protected $ekko;
 
     protected function setUp(): void
     {
         $this->ekko = new Ekko;
-        $this->ekko->setDefaultOutput('active');
     }
 
     public function testIsActiveRoot()
@@ -63,7 +62,10 @@ class EkkoIsActiveTest extends TestCase
     {
         $_SERVER['REQUEST_URI'] = '/';
 
-        Ekko::enableGlobalHelpers();
+        // TODO: Need to figure out why this works.
+        // Ekko::enableGlobalHelpers();
+
+        $this->ekko->enableGlobalHelpers();
 
         $this->assertTrue(is_active('/', true));
     }

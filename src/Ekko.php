@@ -11,7 +11,7 @@ class Ekko
 
     protected $url;
 
-    static public function enableGlobalHelpers()
+    public function enableGlobalHelpers()
     {
         require_once(__DIR__.'/Helpers.php');
     }

@@ -1,21 +1,8 @@
 # Ekko
 
-PHP function for marking navigation items active.
+Framework agnostic PHP package for marking navigation items active.
 
 [![Become a Patron](https://img.shields.io/badge/Become%20a-Patron-f96854.svg?style=for-the-badge)](https://www.patreon.com/laravelista)
-
-> Starting with version `2.0.0`, there is no backward compatibility with the previous releases.
-
-The default output value is for [Bootstrap](http://getbootstrap.com), but it can be changed to anything.
-
-## Features
-
-- Single function
-- Five lines of code
-- Framework agnostic
-- Supports wildcards & arrays
-- Documented
-- Tested
 
 ## Installation
 
@@ -45,7 +32,7 @@ You could do it manually with Laravel, but you will end up with a sausage:
 </ul>
 ```
 
-With Ekko your code will look like this:
+With Ekko your code could look like this:
 
 ```html
 <ul class="nav navbar-nav">
@@ -54,13 +41,49 @@ With Ekko your code will look like this:
 </ul>
 ```
 
-What if you are not using Bootstrap, but some other framework or a custom design? Instead of returning `active` CSS class, you can make Ekko return anything you want including boolean `true` or `false`:
+or like this:
 
 ```html
 <ul class="nav navbar-nav">
-    <li class="{{ is_active('/', 'highlight') }}"><a href="/">Home</a></li>
+    <li class="{{ Ekko::isActiveRoute('home') }}"><a href="/">Home</a></li>
     <li><a href="/about">About</a></li>
 </ul>
+```
+
+or this:
+
+```html
+<ul class="nav navbar-nav">
+    <li class="{{ $ekko->isActive('/') }}"><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+</ul>
+```
+
+What if you are not using Bootstrap, but some other framework or a custom design? Instead of returning `active` CSS class, you can make Ekko return anything you want.
+
+```html
+<ul class="nav navbar-nav">
+    <li class="{{ isActive('/', 'highlight') }}"><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+</ul>
+```
+
+You can alse set the default output value if you don't want to type it everytime:
+
+```php
+$ekko = new Ekko;
+$ekko->setDefaultValue('highlight');
+return $ekko->isActive('/');
+```
+
+or in Laravel you can set the default output value in the config `config/ekko.php` file:
+
+```php
+<?php
+
+return [
+    'default_output' => 'highlight'
+];
 ```
 
 Using boolean `true` or `false` is convenient if you need to display some content depending on which page you are in your layout view:
@@ -70,6 +93,14 @@ Using boolean `true` or `false` is convenient if you need to display some conten
     <p>Something that is only visible on the `about` page.</p>
 @endif
 ```
+
+Global helper functions as displayed above are disabled by default. To enable them use:
+
+```php
+Ekko::enableGlobalHelpers();
+```
+
+In Laravel you can add the above line of code to the `boot` method of your `AppServiceProvider` class.
 
 ## Usage
 
