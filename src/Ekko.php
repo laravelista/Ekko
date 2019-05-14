@@ -11,6 +11,11 @@ class Ekko
 
     protected $url;
 
+    static public function enableGlobalHelpers()
+    {
+        require_once(__DIR__.'/Helpers.php');
+    }
+
     public function setDefaultOutput($value)
     {
         $this->defaultOutput = $value;
@@ -35,14 +40,30 @@ class Ekko
         return $this->url->current();
     }
 
+    protected function inArray(array $input, string $methodName): bool
+    {
+        foreach($input as $url) {
+            if ($this->$methodName($url, true)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function displayOutput(bool $result, $output)
+    {
+        return $result ? $this->getOutput($output) : null;
+    }
+
     public function isActive($input, $output = null)
     {
         if (is_array($input)) {
-            return count(array_filter($input, '__FUNCTION__')) > 0 ? $this->getOutput($output) : null;
+            return $this->displayOutput($this->inArray($input, __FUNCTION__), $output);
         }
 
         $regex = '/^' . str_replace(preg_quote('*'), '[^.]*?', preg_quote($input, '/')) . '$/';
 
-        return preg_match($regex, $this->getCurrentUrl()) ? $this->getOutput($output) : null;
+        return $this->displayOutput(preg_match($regex, $this->getCurrentUrl()), $output);
     }
 }
