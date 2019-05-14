@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Providers;
+namespace Laravelista\Ekko\Frameworks\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use Laravelista\Ekko\Frameworks\Laravel\Ekko;
 use Laravelista\Ekko\Url\LaravelUrlProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 
