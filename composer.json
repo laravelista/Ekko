@@ -1,8 +1,8 @@
 {
   "name": "laravelista/ekko",
-  "description": "PHP function for marking navigation items active.",
+  "description": "Framework agnostic PHP package for marking navigation items active.",
   "license": "MIT",
-  "keywords": ["php", "function", "active", "bootstrap", "helper"],
+  "keywords": ["php", "function", "active", "bootstrap", "helper", "laravel"],
   "authors": [
       {
           "name": "Mario Bašić",
@@ -10,12 +10,28 @@
       }
   ],
   "autoload": {
-      "files" : [
-        "src/is_active.php"
-      ]
+      "psr-4": {
+        "Laravelista\\Ekko\\": "src/"
+      }
   },
   "minimum-stability": "stable",
+  "require": {
+    "php": ">=7.2.0"
+  },
   "require-dev": {
-      "phpunit/phpunit": "^8"
+    "phpunit/phpunit": "^8",
+    "mockery/mockery": "^1.2",
+    "illuminate/support": "^5.8",
+    "illuminate/routing": "^5.8"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+          "Laravelista\\Ekko\\Frameworks\\Laravel\\ServiceProvider"
+      ],
+      "aliases": {
+          "Ekko": "Laravelista\\Ekko\\Frameworks\\Laravel\\Facade"
+      }
+    }
   }
 }
