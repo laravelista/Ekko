@@ -21,6 +21,7 @@ class EkkoTest extends TestCase
         $portfolio_search_path = '/portfolio?client=acme&year=2019';
         $index_query_path = '/index.php?page=something&id=2';
 
+        // routeName, input, result, output (optional) (null)
         return [
             ['', '', 'active'],
             ['', '/', null],
@@ -48,6 +49,7 @@ class EkkoTest extends TestCase
             [$article_path, '*bridge', 'active'],
             [$article_path, '/article/*', 'active'],
             [$article_path, ['*fox*', '*bridge'], 'active'],
+            [$article_path, ['*fox*', '*bridge'], 'hello', 'hello'],
             [$article_path, '/article', null],
             [$article_path, '/a-brown-fox', null],
             [$article_path, 'bridge', null],
@@ -59,6 +61,7 @@ class EkkoTest extends TestCase
             [$portfolio_search_path, '/portfolio&client=', null],
 
             [$index_query_path, '/index.php*', 'active'],
+            [$index_query_path, '/index.php*', 'highlight', 'highlight'],
             [$index_query_path, '/index.php*page*id*', 'active'],
             [$index_query_path, '/index.php?page=something*', 'active'],
             [$index_query_path, '/index.php', 'active'],
@@ -72,11 +75,11 @@ class EkkoTest extends TestCase
      * @test
      * @dataProvider isActiveDataProvider
      */
-    public function isActive($path, $input, $output)
+    public function isActive($path, $input, $result, $output = null)
     {
         $_SERVER['REQUEST_URI'] = $path;
 
-        $this->assertEquals($output, $this->ekko->isActive($input));
+        $this->assertEquals($result, $this->ekko->isActive($input, $output));
     }
 
     /**

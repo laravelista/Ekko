@@ -19,52 +19,128 @@ class LaravelTest extends TestCase
     public function setUp(): void
     {
         $this->router = m::mock(\Illuminate\Routing\Router::class);
-
         $this->request = m::mock(\Illuminate\Http\Request::class);
 
         $this->ekko = new Ekko($this->router);
         $this->ekko->setUrlProvider(new LaravelUrlProvider($this->request));
     }
 
-    /** @test */
-    public function it_detects_active_route_by_name()
+    public function isActiveRouteDataProvider()
     {
-        $this->router->shouldReceive('currentRouteName')->times(8)->andReturn('users.index');
+        $route_name = 'users.index';
 
-        $this->assertEquals("active", $this->ekko->isActiveRoute('users.index'));
-        $this->assertEquals("hello", $this->ekko->isActiveRoute('users.index', 'hello'));
-        $this->assertEquals(null, $this->ekko->isActiveRoute('clients.index'));
-        $this->assertEquals(null, $this->ekko->isActiveRoute('clients.index', 'hello'));
+        // routeName, input, result, output (optional) (null)
+        return [
+            [$route_name, 'users.index', 'active'],
+            [$route_name, 'users.index', 'hello', 'hello'],
+            [$route_name, 'clients.index', null],
+            [$route_name, 'clients.index', null, 'hello'],
 
-        // Wildcard support
-        $this->assertEquals("active", $this->ekko->isActiveRoute('users.*'));
-        $this->assertEquals("hello", $this->ekko->isActiveRoute('users.*', 'hello'));
-        $this->assertEquals(null, $this->ekko->isActiveRoute('clients.*'));
-        $this->assertEquals(null, $this->ekko->isActiveRoute('clients.*', 'hello'));
+            [$route_name, 'users.*', 'active'],
+            [$route_name, 'users.*', 'hello', 'hello'],
+            [$route_name, 'clients.*', null],
+            [$route_name, 'clients.*', null, 'hello'],
+        ];
     }
 
-    /** @test */
-    public function it_detects_active_url()
+    /**
+     * @dataProvider isActiveRouteDataProvider
+     * @test
+     */
+    public function isActiveRoute($routeName, $input, $result, $output = null)
     {
-        $this->request->shouldReceive('getRequestUri')->times(4)->andReturn('/users');
+        $this->router->shouldReceive('currentRouteName')->times(1)->andReturn($routeName);
 
-        $this->assertEquals("active", $this->ekko->isActiveURL('/users'));
-        $this->assertEquals("hello", $this->ekko->isActiveURL('/users', 'hello'));
-        $this->assertEquals(null, $this->ekko->isActiveURL('users'));
-        $this->assertEquals(null, $this->ekko->isActiveURL('/users/preview', 'hello'));
+        $this->assertEquals($result, $this->ekko->isActiveRoute($input, $output));
     }
 
-    /** @test */
-    public function it_detects_active_url_with_query_parameters()
+    public function areActiveRoutesDataProvider()
     {
-        $this->request->shouldReceive('getRequestUri')->times(5)->andReturn('/users?page=acme');
+        $route_name = 'users.index';
+        $deep_route_name = 'frontend.users.show.stats';
 
-        $this->assertEquals('/users?page=acme', $this->ekko->getCurrentUrl());
+        // path, (array) input, result, output (optional) (null)
+        return [
+            [$route_name, ['users.index'], 'active'],
+            [$route_name, ['users.index'], 'hello', 'hello'],
+            [$route_name, ['clients.index'], null],
+            [$route_name, ['clients.index'], null, 'hello'],
 
-        $this->assertEquals("active", $this->ekko->isActiveURL('/users*'));
-        $this->assertEquals("hello", $this->ekko->isActiveURL('/users*', 'hello'));
-        $this->assertEquals(null, $this->ekko->isActiveURL('users'));
-        $this->assertEquals(null, $this->ekko->isActiveURL('/users/preview', 'hello'));
+            [$route_name, ['users.*'], 'active'],
+            [$route_name, ['users.*'], 'hello', 'hello'],
+            [$route_name, ['clients.*'], null],
+            [$route_name, ['clients.*'], null, 'hello'],
+
+            [$deep_route_name, ['frontend.users.*'], 'active'],
+            [$deep_route_name, ['frontend.users.*'], 'hello', 'hello'],
+            [$deep_route_name, ['clients.*'], null],
+            [$deep_route_name, ['clients.*'], null, 'hello'],
+        ];
+    }
+
+    /**
+     * @dataProvider areActiveRoutesDataProvider
+     * @test
+     */
+    public function areActiveRoutes($routeName, array $input, $result, $output = null)
+    {
+        $this->router->shouldReceive('currentRouteName')->times(1)->andReturn($routeName);
+
+        $this->assertEquals($result, $this->ekko->areActiveRoutes($input, $output));
+    }
+
+    public function isActiveURLDataProvider()
+    {
+        $user_index_path = '/users';
+        $users_index_query_path = '/users?page=acme';
+
+        // path, input, result, output (optional) (null)
+        return [
+            [$user_index_path, '/users', 'active'],
+            [$user_index_path, '/users', 'hello', 'hello'],
+            [$user_index_path, 'users', null],
+            [$user_index_path, '/users/preview', null, 'hello'],
+
+            [$users_index_query_path, '/users*', 'active'],
+            [$users_index_query_path, '/users*', 'hello', 'hello'],
+            [$users_index_query_path, 'users', null],
+            [$users_index_query_path, '/users/preview', null, 'hello']
+        ];
+    }
+
+    /**
+     * @dataProvider isActiveURLDataProvider
+     * @test
+     */
+    public function isActiveURL($path, $input, $result, $output = null)
+    {
+        $this->request->shouldReceive('getRequestUri')->times(1)->andReturn($path);
+
+        $this->assertEquals($result, $this->ekko->isActiveURL($input, $output));
+    }
+
+    public function areActiveURLsDataProvider()
+    {
+        $user_index_path = '/users';
+
+        // path, (array) input, result, output (optional) (null)
+        return [
+            [$user_index_path, ['/users'], 'active'],
+            [$user_index_path, ['/users'], 'hello', 'hello'],
+            [$user_index_path, ['users'], null],
+            [$user_index_path, ['/users/preview'], null, 'hello']
+        ];
+    }
+
+    /**
+     * @dataProvider areActiveURLsDataProvider
+     * @test
+     */
+    public function areActiveURLs($path, array $input, $result, $output = null)
+    {
+        $this->request->shouldReceive('getRequestUri')->times(1)->andReturn($path);
+
+        $this->assertEquals($result, $this->ekko->areActiveURLs($input, $output));
     }
 
     /** @test */
@@ -79,45 +155,115 @@ class LaravelTest extends TestCase
         $this->assertEquals(null, $this->ekko->isActiveMatch('under-the-rainbow', 'hello'));
     }
 
-    /** @test */
-    public function it_detects_active_routes_by_name()
+    public function isActiveMatchDataProvider()
     {
-        $this->router->shouldReceive('currentRouteName')->times(8)->andReturn('users.index');
+        $article_path = '/somewhere-over-the-rainbow';
 
-        $this->assertEquals("active", $this->ekko->areActiveRoutes(['users.index']));
-        $this->assertEquals("hello", $this->ekko->areActiveRoutes(['users.index'], 'hello'));
-        $this->assertEquals(null, $this->ekko->areActiveRoutes(['clients.index']));
-        $this->assertEquals(null, $this->ekko->areActiveRoutes(['clients.index'], 'hello'));
-
-        // Wildcard support
-        $this->assertEquals("active", $this->ekko->areActiveRoutes(['users.*']));
-        $this->assertEquals("hello", $this->ekko->areActiveRoutes(['users.*'], 'hello'));
-        $this->assertEquals(null, $this->ekko->areActiveRoutes(['clients.*']));
-        $this->assertEquals(null, $this->ekko->areActiveRoutes(['clients.*'], 'hello'));
+        // path, input, result, output (optional) (null)
+        return [
+            [$article_path, 'over-the-rainbow', 'active'],
+            [$article_path, 'over-the-rainbow', 'hello', 'hello'],
+            [$article_path, 'under-the-rainbow', null],
+            [$article_path, 'under-the-rainbow', null, 'hello'],
+        ];
     }
 
-    /** @test */
-    public function it_detects_deep_active_routes_by_name()
+    /**
+     * @dataProvider isActiveMatchDataProvider
+     * @test
+     */
+    public function isActiveMatch($path, $input, $result, $output = null)
     {
-        $this->router->shouldReceive('currentRouteName')->times(4)
-            ->andReturn('frontend.users.show.stats');
+        $this->request->shouldReceive('getRequestUri')->times(1)->andReturn($path);
 
-        // Wildcard support
-        $this->assertEquals("active", $this->ekko->areActiveRoutes(['frontend.users.*']));
-        $this->assertEquals("hello", $this->ekko->areActiveRoutes(['frontend.users.*'], 'hello'));
-        $this->assertEquals(null, $this->ekko->areActiveRoutes(['clients.*']));
-        $this->assertEquals(null, $this->ekko->areActiveRoutes(['clients.*'], 'hello'));
+        $this->assertEquals($result, $this->ekko->isActiveMatch($input, $output));
     }
 
-    /** @test */
-    public function it_detects_active_routes_by_url()
+    public function areActiveMatchesDataProvider()
     {
-        $this->request->shouldReceive('getRequestUri')->times(4)->andReturn('/users');
+        $article_path = '/somewhere-over-the-rainbow';
 
-        $this->assertEquals("active", $this->ekko->areActiveURLs(['/users']));
-        $this->assertEquals("hello", $this->ekko->areActiveURLs(['/users'], 'hello'));
-        $this->assertEquals(null, $this->ekko->areActiveURLs(['users']));
-        $this->assertEquals(null, $this->ekko->areActiveURLs(['/users/preview'], 'hello'));
+        // path, (array) input, result, output (optional) (null)
+        return [
+            [$article_path, ['over-the-rainbow2', 'over*rainbow'], 'active'],
+            [$article_path, ['over-the-rainbow2', '/*rainbow'], 'hello', 'hello'],
+            [$article_path, ['under-the-rainbow2', '*bowd'], null],
+            [$article_path, ['under-the-rainbow2', '/some*bowd'], null, 'hello']
+        ];
     }
 
+    /**
+     * @dataProvider areActiveMatchesDataProvider
+     * @test
+     */
+    public function areActiveMatches($path, array $input, $result, $output = null)
+    {
+        $this->request->shouldReceive('getRequestUri')->times(2)->andReturn($path);
+
+        $this->assertEquals($result, $this->ekko->areActiveMatches($input, $output));
+    }
+
+    /**
+     * @test
+     */
+    public function globalHelpers()
+    {
+        $this->assertFalse(function_exists('is_active_url'));
+        $this->assertFalse(function_exists('isActiveURL'));
+        $this->assertFalse(function_exists('are_active_urls'));
+        $this->assertFalse(function_exists('areActiveURLs'));
+
+        $this->assertFalse(function_exists('is_active_route'));
+        $this->assertFalse(function_exists('isActiveRoute'));
+        $this->assertFalse(function_exists('are_active_routes'));
+        $this->assertFalse(function_exists('areActiveRoutes'));
+
+        $this->assertFalse(function_exists('is_active_match'));
+        $this->assertFalse(function_exists('isActiveMatch'));
+        $this->assertFalse(function_exists('are_active_matches'));
+        $this->assertFalse(function_exists('areActiveMatches'));
+
+        // This function gets required in EkkoTest.php file
+        // $this->assertFalse(function_exists('is_active'));
+
+        $this->ekko->enableGlobalHelpers();
+
+        $this->assertTrue(function_exists('is_active_url'));
+        $this->assertTrue(function_exists('isActiveURL'));
+        $this->assertTrue(function_exists('are_active_urls'));
+        $this->assertTrue(function_exists('areActiveURLs'));
+
+        $this->assertTrue(function_exists('is_active_route'));
+        $this->assertTrue(function_exists('isActiveRoute'));
+        $this->assertTrue(function_exists('are_active_routes'));
+        $this->assertTrue(function_exists('areActiveRoutes'));
+
+        $this->assertTrue(function_exists('is_active_match'));
+        $this->assertTrue(function_exists('isActiveMatch'));
+        $this->assertTrue(function_exists('are_active_matches'));
+        $this->assertTrue(function_exists('areActiveMatches'));
+
+        $this->assertTrue(function_exists('is_active'));
+    }
+
+    /**
+     * @test
+     */
+    public function defaultOutput()
+    {
+        $this->request->shouldReceive('getRequestUri')->times(2)->andReturn('/');
+
+        $this->ekko->setDefaultOutput('highlight');
+
+        $this->assertEquals('highlight', $this->ekko->isActiveURL('/'));
+        $this->assertEquals('test', $this->ekko->isActiveURL('/', 'test'));
+    }
+
+    /**
+     * @test
+     */
+    public function urlProvider()
+    {
+        $this->assertInstanceOf(LaravelUrlProvider::class, $this->ekko->getUrlProvider());
+    }
 }

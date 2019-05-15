@@ -59,6 +59,6 @@ class Ekko extends \Laravelista\Ekko\Ekko
 
     public function areActiveMatches(array $input, $output = null)
     {
-        return $this->isActive($input, $output);
+        return $this->isActiveMatch($input, $output);
     }
 }
