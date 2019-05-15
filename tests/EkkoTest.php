@@ -34,6 +34,7 @@ class EkkoTest extends TestCase
             [$root_path, ['/test', ''], null],
 
             [$user_edit_path, '/user/3/edit', 'active'],
+            [$user_edit_path, '/user/3/edit*', 'active'],
             [$user_edit_path, '/user/*/edit', 'active'],
             [$user_edit_path, '/user/3/*', 'active'],
             [$user_edit_path, '/user/*', 'active'],
