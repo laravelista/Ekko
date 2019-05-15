@@ -13,7 +13,7 @@ class Ekko extends \Laravelista\Ekko\Ekko
         $this->router = $router;
     }
 
-    public function enableGlobalHelpers()
+    static public function enableGlobalHelpers()
     {
         require_once(__DIR__.'/Helpers.php');
     }
@@ -24,7 +24,7 @@ class Ekko extends \Laravelista\Ekko\Ekko
             return $this->displayOutput($this->inArray($input, __FUNCTION__), $output);
         }
 
-        $regex = '/^' . str_replace(preg_quote('*'), '[^.]*?', preg_quote($input, '/')) . '/';
+        $regex = '/^' . str_replace(preg_quote('*'), '.*?', preg_quote($input, '/')) . '$/';
 
         return $this->displayOutput(preg_match($regex, $this->router->currentRouteName()), $output);
     }

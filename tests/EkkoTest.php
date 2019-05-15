@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Laravelista\Ekko\Ekko;
+use Laravelista\Ekko\Url\GenericUrlProvider;
 
 class EkkoTest extends TestCase
 {
@@ -12,61 +13,105 @@ class EkkoTest extends TestCase
         $this->ekko = new Ekko;
     }
 
-    public function testIsActiveRoot()
+    public function isActiveDataProvider()
+    {
+        $root_path = '/';
+        $user_edit_path = '/user/3/edit';
+        $article_path = '/article/a-brown-fox-jumps-over-a-burning-bridge';
+        $portfolio_search_path = '/portfolio?client=acme&year=2019';
+        $index_query_path = '/index.php?page=something&id=2';
+
+        return [
+            ['', '', 'active'],
+            ['', '/', null],
+
+            [$root_path, '/', 'active'],
+            [$root_path, '*', 'active'],
+            [$root_path, ['/', '*'], 'active'],
+            [$root_path, '', null],
+            [$root_path, '/test', null],
+            [$root_path, ['/test', ''], null],
+
+            [$user_edit_path, '/user/3/edit', 'active'],
+            [$user_edit_path, '/user/*/edit', 'active'],
+            [$user_edit_path, '/user/3/*', 'active'],
+            [$user_edit_path, '/user/*', 'active'],
+            [$user_edit_path, '/user*', 'active'],
+            [$user_edit_path, ['/user/3/edit', '/user/*/edit'], 'active'],
+            [$user_edit_path, '/user', null],
+            [$user_edit_path, '/user/3', null],
+            [$user_edit_path, '/user/3/', null],
+            [$user_edit_path, ['/user', '/user/3'], null],
+
+            [$article_path, '*fox*', 'active'],
+            [$article_path, '*fox*bridge', 'active'],
+            [$article_path, '*bridge', 'active'],
+            [$article_path, '/article/*', 'active'],
+            [$article_path, ['*fox*', '*bridge'], 'active'],
+            [$article_path, '/article', null],
+            [$article_path, '/a-brown-fox', null],
+            [$article_path, 'bridge', null],
+            [$article_path, ['/article', '/a-brown-fox'], null],
+
+            [$portfolio_search_path, '/portfolio*', 'active'],
+            [$portfolio_search_path, '/portfolio*client*', 'active'],
+            [$portfolio_search_path, '/portfolio', 'active'],
+            [$portfolio_search_path, '/portfolio&client=', null],
+
+            [$index_query_path, '/index.php*', 'active'],
+            [$index_query_path, '/index.php*page*id*', 'active'],
+            [$index_query_path, '/index.php?page=something*', 'active'],
+            [$index_query_path, '/index.php', 'active'],
+            [$index_query_path, '/*', 'active'],
+            [$index_query_path, '/', null],
+            [$index_query_path, '/index.php?page=something', null],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider isActiveDataProvider
+     */
+    public function isActive($path, $input, $output)
+    {
+        $_SERVER['REQUEST_URI'] = $path;
+
+        $this->assertEquals($output, $this->ekko->isActive($input));
+    }
+
+    /**
+     * @test
+     */
+    public function globalHelpers()
     {
         $_SERVER['REQUEST_URI'] = '/';
-
-        $this->assertTrue($this->ekko->isActive('/', true));
-        $this->assertTrue($this->ekko->isActive('*', true)); // you can do this, but why?
-        $this->assertTrue($this->ekko->isActive(['/', '*'], true));
-
-        $this->assertNull($this->ekko->isActive('/test'));
-        $this->assertNull($this->ekko->isActive(''));
-        $this->assertNull($this->ekko->isActive(['/test', '']));
-    }
-
-    public function testIsActiveWildcards()
-    {
-        $_SERVER['REQUEST_URI'] = '/user/3/edit';
-
-        $this->assertTrue($this->ekko->isActive('/user/3/edit', true));
-        $this->assertTrue($this->ekko->isActive('/user/*/edit', true));
-        $this->assertTrue($this->ekko->isActive('/user/3/*', true));
-        $this->assertTrue($this->ekko->isActive('/user/*', true));
-        $this->assertTrue($this->ekko->isActive('/user*', true));
-        $this->assertTrue($this->ekko->isActive(['/user/3/edit', '/user/*/edit'], true));
-
-        $this->assertNull($this->ekko->isActive('/user'));
-        $this->assertNull($this->ekko->isActive('/user/3'));
-        $this->assertNull($this->ekko->isActive('/user/3/'));
-        $this->assertNull($this->ekko->isActive(['/user', '/user/3']));
-    }
-
-    public function testIsActiveMatches()
-    {
-        $_SERVER['REQUEST_URI'] = '/article/a-brown-fox-jumps-over-a-burning-bridge';
-
-        $this->assertTrue($this->ekko->isActive('*fox*', true));
-        $this->assertTrue($this->ekko->isActive('*fox*bridge', true));
-        $this->assertTrue($this->ekko->isActive('*bridge', true));
-        $this->assertTrue($this->ekko->isActive('/article/*', true));
-        $this->assertTrue($this->ekko->isActive(['*fox*', '*bridge'], true));
-
-        $this->assertNull($this->ekko->isActive('/article'));
-        $this->assertNull($this->ekko->isActive('/a-brown-fox'));
-        $this->assertNull($this->ekko->isActive('bridge'));
-        $this->assertNull($this->ekko->isActive(['/article', '/a-brown-fox']));
-    }
-
-    public function testGlobalHelpers()
-    {
-        $_SERVER['REQUEST_URI'] = '/';
-
-        // TODO: Need to figure out why this works.
-        // Ekko::enableGlobalHelpers();
 
         $this->ekko->enableGlobalHelpers();
 
-        $this->assertTrue(is_active('/', true));
+        $this->assertEquals('active', is_active('/'));
+    }
+
+    /**
+     * @test
+     */
+    public function defaultOutput()
+    {
+        $_SERVER['REQUEST_URI'] = '/';
+
+        $this->ekko->setDefaultOutput('highlight');
+
+        $this->assertEquals('highlight', $this->ekko->isActive('/'));
+        $this->assertEquals('test', $this->ekko->isActive('/', 'test'));
+    }
+
+    /**
+     * @test
+     */
+    public function urlProvider()
+    {
+        $this->assertNull($this->ekko->getUrlProvider());
+
+        $this->ekko->setUrlProvider(new GenericUrlProvider);
+        $this->assertInstanceOf(GenericUrlProvider::class, $this->ekko->getUrlProvider());
     }
 }

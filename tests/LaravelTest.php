@@ -5,7 +5,7 @@ use Laravelista\Ekko\Url\LaravelUrlProvider;
 use PHPUnit\Framework\TestCase;
 use Laravelista\Ekko\Frameworks\Laravel\Ekko;
 
-class EkkoLaravelTest extends TestCase
+class LaravelTest extends TestCase
 {
     protected $router;
     protected $ekko;
@@ -46,7 +46,7 @@ class EkkoLaravelTest extends TestCase
     /** @test */
     public function it_detects_active_url()
     {
-        $this->request->shouldReceive('getBasePath')->times(4)->andReturn('/users');
+        $this->request->shouldReceive('getRequestUri')->times(4)->andReturn('/users');
 
         $this->assertEquals("active", $this->ekko->isActiveURL('/users'));
         $this->assertEquals("hello", $this->ekko->isActiveURL('/users', 'hello'));
@@ -55,9 +55,22 @@ class EkkoLaravelTest extends TestCase
     }
 
     /** @test */
+    public function it_detects_active_url_with_query_parameters()
+    {
+        $this->request->shouldReceive('getRequestUri')->times(5)->andReturn('/users?page=acme');
+
+        $this->assertEquals('/users?page=acme', $this->ekko->getCurrentUrl());
+
+        $this->assertEquals("active", $this->ekko->isActiveURL('/users*'));
+        $this->assertEquals("hello", $this->ekko->isActiveURL('/users*', 'hello'));
+        $this->assertEquals(null, $this->ekko->isActiveURL('users'));
+        $this->assertEquals(null, $this->ekko->isActiveURL('/users/preview', 'hello'));
+    }
+
+    /** @test */
     public function it_detects_active_match_in_url()
     {
-        $this->request->shouldReceive('getBasePath')->times(4)
+        $this->request->shouldReceive('getRequestUri')->times(4)
             ->andReturn('/somewhere-over-the-rainbow');
 
         $this->assertEquals("active", $this->ekko->isActiveMatch('over-the-rainbow'));
@@ -99,7 +112,7 @@ class EkkoLaravelTest extends TestCase
     /** @test */
     public function it_detects_active_routes_by_url()
     {
-        $this->request->shouldReceive('getBasePath')->times(4)->andReturn('/users');
+        $this->request->shouldReceive('getRequestUri')->times(4)->andReturn('/users');
 
         $this->assertEquals("active", $this->ekko->areActiveURLs(['/users']));
         $this->assertEquals("hello", $this->ekko->areActiveURLs(['/users'], 'hello'));

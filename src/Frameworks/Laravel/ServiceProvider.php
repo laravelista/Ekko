@@ -34,15 +34,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider implements Def
         $this->app->singleton(Ekko::class, function ($app) {
             $ekko = new Ekko($app['router']);
             $ekko->setUrlProvider(new LaravelUrlProvider($app['request']));
-
             $ekko->setDefaultOutput(config('ekko.default_output'));
-
-            if (config('ekko.global_helpers')) {
-                $ekko->enableGlobalHelpers();
-            }
 
             return $ekko;
         });
+
+        if (config('ekko.global_helpers')) {
+            Ekko::enableGlobalHelpers();
+        }
     }
 
     /**

@@ -15,8 +15,6 @@ class LaravelUrlProvider implements UrlProviderInterface
 
     public function current(): string
     {
-        $path = $this->request->getBasePath();
-
-        return empty($path) ? '/' : $path;
+        return $this->request->getRequestUri();
     }
 }
