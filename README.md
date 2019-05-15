@@ -36,17 +36,21 @@ Laravel 5.5+ will use the auto-discovery function to register the ServiceProvide
 
 If using 5.4 (or if you are not using auto-discovery) you will need to include the service provider and facade in `config/app.php`:
 
+```
 'providers' => [
     ...,
     Laravelista\Ekko\Frameworks\Laravel\ServiceProvider::class
 ];
+```
 
 And add a facade alias to the same file at the bottom:
 
+```
 'aliases' => [
     ...,
     'Ekko' => Laravelista\Ekko\Frameworks\Laravel\Facade::class
 ];
+```
 
 ## Overview
 
