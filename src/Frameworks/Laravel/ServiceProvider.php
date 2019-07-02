@@ -38,10 +38,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider /* implements 
 
             return $ekko;
         });
-
-        if (config('ekko.global_helpers')) {
-            Ekko::enableGlobalHelpers();
-        }
     }
 
     /**
