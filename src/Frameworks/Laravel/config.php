@@ -7,10 +7,4 @@ return [
      * is defined when user called.
      */
     'default_output' => 'active',
-
-    /**
-     * By default global helper functions are disabled.
-     * Change this to true to enable them.
-     */
-    'global_helpers' => false
 ];

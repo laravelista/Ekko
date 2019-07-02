@@ -76,7 +76,7 @@ With Ekko your code could look like this:
 
 ```html
 <ul class="nav navbar-nav">
-    <li class="{{ is_active('/') }}"><a href="/">Home</a></li>
+    <li class="{{ Ekko::isActive('/') }}"><a href="/">Home</a></li>
     <li><a href="/about">About</a></li>
 </ul>
 ```
@@ -105,7 +105,7 @@ What if you are not using Bootstrap, but some other framework or a custom design
 
 ```html
 <ul class="nav navbar-nav">
-    <li class="{{ isActive('/', 'highlight') }}"><a href="/">Home</a></li>
+    <li class="{{ Ekko::isActive('/', 'highlight') }}"><a href="/">Home</a></li>
     <li><a href="/about">About</a></li>
 </ul>
 ```
@@ -137,7 +137,7 @@ php artisan vendor:publish --provider="Laravelista\Ekko\Frameworks\Laravel\Servi
 Using boolean `true` or `false` is convenient if you need to display some content depending on which page you are in your layout view:
 
 ```html
-@if(is_active('/about', true))
+@if(Ekko::isActive('/about', true))
     <p>Something that is only visible on the `about` page.</p>
 @endif
 ```
@@ -146,7 +146,11 @@ Using boolean `true` or `false` is convenient if you need to display some conten
 
 **Global helper functions** as displayed above are disabled by default. To enable them use `Ekko::enableGlobalHelpers();` or `$ekko->enableGlobalHelpers()`.
 
-In Laravel you can set `global_helpers` value to `true` in the config `config/ekko.php` file.
+In Laravel add this code to your `app/Providers/AppServiceProvider.php` file in `register` method:
+
+```
+\Ekko::enableGlobalHelpers();
+```
 
 ## Usage
 
@@ -183,19 +187,19 @@ For arrays of named routes. Supports wildcards.
 
 `Ekko::isActiveURL($input, $output = null)`
 The same as `Ekko::isActive`.
-**Backward compatibility.** Use `isActive` and pass it the same array.
+**Backward compatibility.** Use `Ekko::isActive` and pass it the same input.
 
 `Ekko::areActiveURLs(array $input, $output = null)`
 The same as `Ekko::isActiveURL`, but accepts only the array of Urls.
-**Backward compatibility.** Use `isActive` and pass it the same array.
+**Backward compatibility.** Use `Ekko::isActive` and pass it the same array.
 
 `Ekko::isActiveMatch($input, $output = null)`
 The same as `Ekko::isActive`. This method encloses the input with wildcard `*`. Supports string, array and wildcards as input.
-**Backward compatibility.** Use `isActive` and pass it the same input, but with wildcard `*` at the desired place.
+**Backward compatibility.** Use `Ekko::isActive` and pass it the same input, but with wildcard `*` at the desired place.
 
 `Ekko::areActiveMatches(array $input, $output = null)`
 The same as `Ekko::isActiveMatch`, but accepts only the array of strings.
-**Backward compatibility.** Use `isActive` and pass it the same array.
+**Backward compatibility.** Use `Ekko::isActive` and pass it the same array.
 
 ## Credits
 
