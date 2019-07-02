@@ -3,9 +3,9 @@
 namespace Laravelista\Ekko\Frameworks\Laravel;
 
 use Laravelista\Ekko\Url\LaravelUrlProvider;
-use Illuminate\Contracts\Support\DeferrableProvider;
+// use Illuminate\Contracts\Support\DeferrableProvider;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider implements DeferrableProvider
+class ServiceProvider extends \Illuminate\Support\ServiceProvider /* implements DeferrableProvider */
 {
     /**
      * Indicates if loading of the provider is deferred.
