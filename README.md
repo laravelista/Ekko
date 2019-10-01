@@ -211,3 +211,15 @@ Many thanks to:
 - [@it-can](https://github.com/it-can) for Laravel 5.5+ auto-discovery.
 - [@foo99](https://github.com/foo99) for snake_case function names.
 - [@Turboveja](https://github.com/Turboveja) for are_active_matches function.
+
+## Contributing
+
+Thank you for considering contributing to Ekko! The contribution guide can be found on the [Laravelista website](https://laravelista.hr/contributing).
+
+## Code of Conduct
+
+In order to ensure that the Laravelista community is welcoming to all, please review and abide by the [Code of Conduct](https://laravelista.hr/code-of-conduct).
+
+## License
+
+Ekko is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
