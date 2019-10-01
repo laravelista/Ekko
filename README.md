@@ -212,6 +212,10 @@ Many thanks to:
 - [@foo99](https://github.com/foo99) for snake_case function names.
 - [@Turboveja](https://github.com/Turboveja) for are_active_matches function.
 
+## Laravelista Sponsors & Backers
+
+I would like to extend my thanks to the following sponsors & backers for funding my open-source journey. If you are interested in becoming a sponsor or backer, please visit the Laravelista [Backers page](https://laravelista.hr/backers).
+
 ## Contributing
 
 Thank you for considering contributing to Ekko! The contribution guide can be found on the [Laravelista website](https://laravelista.hr/contributing).
