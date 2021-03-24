@@ -2,6 +2,8 @@
 
 namespace Laravelista\Ekko\Frameworks\Laravel;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Config;
 use Laravelista\Ekko\Url\LaravelUrlProvider;
 // use Illuminate\Contracts\Support\DeferrableProvider;
 
@@ -31,10 +33,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider /* implements 
             __DIR__.'/config.php', 'ekko'
         );
 
-        $this->app->singleton(Ekko::class, function ($app) {
-            $ekko = new Ekko($app['router']);
-            $ekko->setUrlProvider(new LaravelUrlProvider($app['request']));
-            $ekko->setDefaultOutput(config('ekko.default_output'));
+        $this->app->singleton(Ekko::class, function (Application $app) {
+            $ekko = new Ekko($app->make('router'));
+            $ekko->setUrlProvider(new LaravelUrlProvider($app->make('request')));
+            $ekko->setDefaultOutput(Config::get('ekko.default_output'));
 
             return $ekko;
         });
@@ -48,7 +50,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider /* implements 
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/config.php' => config_path('ekko.php'),
+            __DIR__.'/config.php' => $this->app->configPath('ekko.php'),
         ]);
     }
 

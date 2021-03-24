@@ -13,6 +13,11 @@ use Laravelista\Ekko\Url\GenericUrlProvider;
  */
 class Ekko
 {
+    public function __construct()
+    {
+        $this->url = new GenericUrlProvider;
+    }
+
     /**
      * This value gets returned if the
      * given output equals null.
@@ -26,12 +31,14 @@ class Ekko
      *
      * @var UrlProviderInterface $url
      */
-    protected $url;
+    protected UrlProviderInterface $url;
 
     /**
      * This static method uses `require_once` to
      * include global helper functions. By default
      * global functions are not enabled.
+     *
+     * @return void
      */
     static public function enableGlobalHelpers()
     {
@@ -42,8 +49,10 @@ class Ekko
      * Use this to change the default output value.
      *
      * @param mixed $value This can be anything
+     *
+     * @return void
      */
-    public function setDefaultOutput($value)
+    public function setDefaultOutput($value): void
     {
         $this->defaultOutput = $value;
     }
@@ -66,18 +75,18 @@ class Ekko
      * then it uses the GenericUrlProvider.
      *
      * @param UrlProviderInterface $urlProvider
+     *
+     * @return void
      */
-    public function setUrlProvider(UrlProviderInterface $urlProvider)
+    public function setUrlProvider(UrlProviderInterface $urlProvider): void
     {
         $this->url = $urlProvider;
     }
 
     /**
-     * Used in testing.
      * It returns the Url provider instance.
-     * This could be helpful to someone.
      *
-     * @return UrlProviderInterface|null
+     * @return UrlProviderInterface
      */
     public function getUrlProvider()
     {
@@ -93,10 +102,6 @@ class Ekko
      */
     public function getCurrentUrl(): string
     {
-        if (!isset($this->url)) {
-            $this->url = new GenericUrlProvider;
-        }
-
         return $this->url->current();
     }
 
@@ -147,7 +152,7 @@ class Ekko
      * @param null|mixed $output User given output.
      * @return mixed|null Either user given output or the default output value or null.
      */
-    public function isActive($input, $output = null)
+    public function isActive(array|string $input, $output = null)
     {
         if (is_array($input)) {
             return $this->displayOutput($this->inArray($input, __FUNCTION__), $output);
@@ -155,6 +160,6 @@ class Ekko
 
         $regex = '/^' . str_replace(preg_quote('*'), '.*?', preg_quote($input, '/')) . '(\?.*?)*?$/';
 
-        return $this->displayOutput(preg_match($regex, $this->getCurrentUrl()), $output);
+        return $this->displayOutput((bool) preg_match($regex, $this->getCurrentUrl()), $output);
     }
 }

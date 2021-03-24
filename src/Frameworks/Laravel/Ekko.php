@@ -7,16 +7,11 @@ use Illuminate\Routing\Router;
 class Ekko extends \Laravelista\Ekko\Ekko
 {
     /**
-     * @var Router $router
-     */
-    protected $router;
-
-    /**
      * @param Router $router
      */
-    public function __construct(Router $router)
+    public function __construct(protected Router $router)
     {
-        $this->router = $router;
+        parent::__construct();    
     }
 
     /**
@@ -25,6 +20,8 @@ class Ekko extends \Laravelista\Ekko\Ekko
      * global functions are not enabled.
      *
      * This includes Laravel specific helpers.
+     *
+     * @return void
      */
     static public function enableGlobalHelpers()
     {
@@ -48,7 +45,7 @@ class Ekko extends \Laravelista\Ekko\Ekko
 
         $regex = '/^' . str_replace(preg_quote('*'), '.*?', preg_quote($input, '/')) . '$/';
 
-        return $this->displayOutput(preg_match($regex, $this->router->currentRouteName()), $output);
+        return $this->displayOutput((bool) preg_match($regex, $this->router->currentRouteName() ?? ''), $output);
     }
 
     /**

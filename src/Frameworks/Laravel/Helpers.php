@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use \Laravelista\Ekko\Frameworks\Laravel\Ekko;
 
 /**
@@ -7,30 +8,50 @@ use \Laravelista\Ekko\Frameworks\Laravel\Ekko;
  */
 
 if (!function_exists('isActiveRoute')) {
-    function isActiveRoute($input, $output = null)
+    /**
+     * @param array|string $input URL or array of URLs.
+     * @param null|mixed $output User given output.
+     * @return mixed|null Either user given output or the default output value or null.
+     */
+    function isActiveRoute(array|string $input, mixed $output = null): mixed
     {
-        return app(Ekko::class)->isActiveRoute($input, $output);
+        return App::resolve(Ekko::class)->isActiveRoute($input, $output);
     }
 }
 
 if (!function_exists('is_active_route')) {
-    function is_active_route($input, $output = null)
+    /**
+     * @param array|string $input URL or array of URLs.
+     * @param null|mixed $output User given output.
+     * @return mixed|null Either user given output or the default output value or null.
+     */
+    function is_active_route(array|string $input, mixed $output = null): mixed
     {
-        return app(Ekko::class)->isActiveRoute($input, $output);
+        return App::resolve(Ekko::class)->isActiveRoute($input, $output);
     }
 }
 
 if (!function_exists('areActiveRoutes')) {
-    function areActiveRoutes(array $input, $output = null)
+    /**
+     * @param array|string $input URL or array of URLs.
+     * @param null|mixed $output User given output.
+     * @return mixed|null Either user given output or the default output value or null.
+     */
+    function areActiveRoutes(array|string $input, mixed $output = null): mixed
     {
-        return app(Ekko::class)->isActiveRoute($input, $output);
+        return App::resolve(Ekko::class)->isActiveRoute($input, $output);
     }
 }
 
 if (!function_exists('are_active_routes')) {
-    function are_active_routes(array $input, $output = null)
+    /**
+     * @param array|string $input URL or array of URLs.
+     * @param null|mixed $output User given output.
+     * @return mixed|null Either user given output or the default output value or null.
+     */
+    function are_active_routes(array|string $input, mixed $output = null): mixed
     {
-        return app(Ekko::class)->isActiveRoute($input, $output);
+        return App::resolve(Ekko::class)->isActiveRoute($input, $output);
     }
 }
 
@@ -41,38 +62,62 @@ if (!function_exists('are_active_routes')) {
 if (!function_exists('is_active')) {
     /**
      * Backward compatibility with v2.
+     * 
+     * @param array|string $input URL or array of URLs.
+     * @param null|mixed $output User given output.
+     * @return mixed|null Either user given output or the default output value or null.
      */
-    function is_active($input, $output = null)
+    function is_active(array|string $input, mixed $output = null): mixed
     {
-        return app(Ekko::class)->isActive($input, $output);
+        return App::resolve(Ekko::class)->isActive($input, $output);
     }
 }
 
 if (!function_exists('isActiveURL')) {
-    function isActiveURL($input, $output = null)
+    /**
+     * @param array|string $input URL or array of URLs.
+     * @param null|mixed $output User given output.
+     * @return mixed|null Either user given output or the default output value or null.
+     */
+    function isActiveURL(array|string $input, mixed $output = null): mixed
     {
-        return app(Ekko::class)->isActive($input, $output);
+        return App::resolve(Ekko::class)->isActive($input, $output);
     }
 }
 
 if (!function_exists('is_active_url')) {
-    function is_active_url($input, $output = null)
+    /**
+     * @param array|string $input URL or array of URLs.
+     * @param null|mixed $output User given output.
+     * @return mixed|null Either user given output or the default output value or null.
+     */
+    function is_active_url(array|string $input, mixed $output = null): mixed
     {
-        return app(Ekko::class)->isActive($input, $output);
+        return App::resolve(Ekko::class)->isActive($input, $output);
     }
 }
 
 if (!function_exists('areActiveURLs')) {
-    function areActiveURLs(array $input, $output = null)
+    /**
+     * @param array|string $input URL or array of URLs.
+     * @param null|mixed $output User given output.
+     * @return mixed|null Either user given output or the default output value or null.
+     */
+    function areActiveURLs(array|string $input, mixed $output = null): mixed
     {
-        return app(Ekko::class)->isActive($input, $output);
+        return App::resolve(Ekko::class)->isActive($input, $output);
     }
 }
 
 if (!function_exists('are_active_urls')) {
-    function are_active_urls(array $input, $output = null)
+    /**
+     * @param array|string $input URL or array of URLs.
+     * @param null|mixed $output User given output.
+     * @return mixed|null Either user given output or the default output value or null.
+     */
+    function are_active_urls(array|string $input, mixed $output = null): mixed
     {
-        return app(Ekko::class)->isActive($input, $output);
+        return App::resolve(Ekko::class)->isActive($input, $output);
     }
 }
 
@@ -81,29 +126,49 @@ if (!function_exists('are_active_urls')) {
  */
 
 if (!function_exists('isActiveMatch')) {
-    function isActiveMatch($input, $output = null)
+    /**
+     * @param array|string $input URL or array of URLs.
+     * @param null|mixed $output User given output.
+     * @return mixed|null Either user given output or the default output value or null.
+     */
+    function isActiveMatch(array|string $input, mixed $output = null): mixed
     {
-        return app(Ekko::class)->isActive($input, $output);
+        return App::resolve(Ekko::class)->isActive($input, $output);
     }
 }
 
 if (!function_exists('is_active_match')) {
-    function is_active_match($input, $output = null)
+    /**
+     * @param array|string $input URL or array of URLs.
+     * @param null|mixed $output User given output.
+     * @return mixed|null Either user given output or the default output value or null.
+     */
+    function is_active_match(array|string $input, mixed $output = null): mixed
     {
-        return app(Ekko::class)->isActive($input, $output);
+        return App::resolve(Ekko::class)->isActive($input, $output);
     }
 }
 
 if (!function_exists('AreActiveMatches')) {
-    function AreActiveMatches($input, $output = null)
+    /**
+     * @param array|string $input URL or array of URLs.
+     * @param null|mixed $output User given output.
+     * @return mixed|null Either user given output or the default output value or null.
+     */
+    function AreActiveMatches(array|string $input, mixed $output = null): mixed
     {
-        return app(Ekko::class)->isActive($input, $output);
+        return App::resolve(Ekko::class)->isActive($input, $output);
     }
 }
 
 if (!function_exists('are_active_matches')) {
-    function are_active_matches($input, $output = null)
+    /**
+     * @param array|string $input URL or array of URLs.
+     * @param null|mixed $output User given output.
+     * @return mixed|null Either user given output or the default output value or null.
+     */
+    function are_active_matches(array|string $input, mixed $output = null): mixed
     {
-        return app(Ekko::class)->isActive($input, $output);
+        return App::resolve(Ekko::class)->isActive($input, $output);
     }
 }

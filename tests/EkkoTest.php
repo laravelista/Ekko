@@ -113,9 +113,6 @@ class EkkoTest extends TestCase
      */
     public function urlProvider()
     {
-        $this->assertNull($this->ekko->getUrlProvider());
-
-        $this->ekko->setUrlProvider(new GenericUrlProvider);
         $this->assertInstanceOf(GenericUrlProvider::class, $this->ekko->getUrlProvider());
     }
 }
