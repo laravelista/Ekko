@@ -1,9 +1,9 @@
 <?php
 
-use \Mockery as m;
-use Laravelista\Ekko\Url\LaravelUrlProvider;
-use PHPUnit\Framework\TestCase;
 use Laravelista\Ekko\Frameworks\Laravel\Ekko;
+use Laravelista\Ekko\Url\LaravelUrlProvider;
+use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 class LaravelTest extends TestCase
 {

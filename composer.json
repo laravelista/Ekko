@@ -23,7 +23,8 @@
     "mockery/mockery": "^1.4",
     "illuminate/support": "^8.0",
     "illuminate/routing": "^8.0",
-    "vimeo/psalm": "^4.6"
+    "vimeo/psalm": "^4.6",
+    "friendsofphp/php-cs-fixer": "^2.18"
   },
   "extra": {
     "laravel": {

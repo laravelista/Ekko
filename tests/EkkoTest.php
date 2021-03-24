@@ -1,8 +1,8 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use Laravelista\Ekko\Ekko;
 use Laravelista\Ekko\Url\GenericUrlProvider;
+use PHPUnit\Framework\TestCase;
 
 class EkkoTest extends TestCase
 {
@@ -10,7 +10,7 @@ class EkkoTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->ekko = new Ekko;
+        $this->ekko = new Ekko();
     }
 
     public function isActiveDataProvider()

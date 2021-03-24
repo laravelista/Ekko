@@ -2,8 +2,8 @@
 
 namespace Laravelista\Ekko;
 
-use Laravelista\Ekko\Url\UrlProviderInterface;
 use Laravelista\Ekko\Url\GenericUrlProvider;
+use Laravelista\Ekko\Url\UrlProviderInterface;
 
 /**
  * This is the main (core) class of Ekko.
@@ -13,11 +13,6 @@ use Laravelista\Ekko\Url\GenericUrlProvider;
  */
 class Ekko
 {
-    public function __construct()
-    {
-        $this->url = new GenericUrlProvider;
-    }
-
     /**
      * This value gets returned if the
      * given output equals null.
@@ -33,6 +28,11 @@ class Ekko
      */
     protected UrlProviderInterface $url;
 
+    public function __construct()
+    {
+        $this->url = new GenericUrlProvider();
+    }
+
     /**
      * This static method uses `require_once` to
      * include global helper functions. By default
@@ -40,7 +40,7 @@ class Ekko
      *
      * @return void
      */
-    static public function enableGlobalHelpers()
+    public static function enableGlobalHelpers()
     {
         require_once(__DIR__.'/Helpers.php');
     }
@@ -118,7 +118,7 @@ class Ekko
      */
     protected function inArray(array $input, string $methodName): bool
     {
-        foreach($input as $url) {
+        foreach ($input as $url) {
             if ($this->$methodName($url, true)) {
                 return true;
             }

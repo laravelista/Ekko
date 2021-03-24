@@ -10,6 +10,6 @@ if (!function_exists('is_active')) {
      */
     function is_active(array|string $input, $output = null)
     {
-        return (new Ekko)->isActive($input, $output);
+        return (new Ekko())->isActive($input, $output);
     }
 }

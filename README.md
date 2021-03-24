@@ -201,6 +201,22 @@ The same as `Ekko::isActive`. This method encloses the input with wildcard `*`. 
 The same as `Ekko::isActiveMatch`, but accepts only the array of strings.
 **Backward compatibility.** Use `Ekko::isActive` and pass it the same array.
 
+## Development
+
+```bash
+# Install dependencies
+composer install
+
+# Run tests
+vendor/bin/phpunit
+
+# Run Psalm
+vendor/bin/psalm
+
+# Format code (php-cs-fixer)
+vendor/bin/php-cs-fixer
+```
+
 ## Credits
 
 Many thanks to:

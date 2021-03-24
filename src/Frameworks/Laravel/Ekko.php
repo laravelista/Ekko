@@ -11,7 +11,7 @@ class Ekko extends \Laravelista\Ekko\Ekko
      */
     public function __construct(protected Router $router)
     {
-        parent::__construct();    
+        parent::__construct();
     }
 
     /**
@@ -23,7 +23,7 @@ class Ekko extends \Laravelista\Ekko\Ekko
      *
      * @return void
      */
-    static public function enableGlobalHelpers()
+    public static function enableGlobalHelpers()
     {
         require_once(__DIR__.'/Helpers.php');
     }

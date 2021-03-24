@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\App;
-use \Laravelista\Ekko\Frameworks\Laravel\Ekko;
+use Laravelista\Ekko\Frameworks\Laravel\Ekko;
 
 /**
  * Route
@@ -62,7 +62,7 @@ if (!function_exists('are_active_routes')) {
 if (!function_exists('is_active')) {
     /**
      * Backward compatibility with v2.
-     * 
+     *
      * @param array|string $input URL or array of URLs.
      * @param null|mixed $output User given output.
      * @return mixed|null Either user given output or the default output value or null.
