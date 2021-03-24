@@ -7,16 +7,11 @@ use Illuminate\Http\Request;
 class LaravelUrlProvider implements UrlProviderInterface
 {
     /**
-     * @var Request $request
-     */
-    protected $request;
-
-    /**
      * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct(protected Request $request)
     {
-        $this->request = $request;
+        //
     }
 
     /**
