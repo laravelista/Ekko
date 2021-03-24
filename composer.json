@@ -6,7 +6,8 @@
   "authors": [
       {
           "name": "Mario Bašić",
-          "email": "mario@laravelista.hr"
+          "email": "mario@laravelista.hr",
+          "homepage": "https://mariobasic.com"
       }
   ],
   "autoload": {
