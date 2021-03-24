@@ -4,15 +4,15 @@ Framework agnostic PHP package for marking navigation items active.
 
 [![Become a Patron](https://img.shields.io/badge/Become%20a-Patron-f96854.svg?style=for-the-badge)](https://www.patreon.com/laravelista)
 
-## New features in v3
+## Features
 
-- Framework agnostic
-- Can be modified for any custom application
-- Currently supported frameworks: Laravel (PRs are welcome!)
-- Global helper functions disabled by default
-- Supports default output value
-- Backward compatible with v1 & v2
-- Fully tested using table driven testing (data providers in PHPUnit)
+- Framework agnostic.
+- Can be modified for any custom application and UI.
+- Currently supported frameworks: Laravel (PRs are welcome!).
+- Global helper functions disabled by default.
+- Supports default output value.
+- Backward compatible.
+- Fully tested using table driven testing (data providers in PHPUnit).
 
 ## Installation
 
@@ -30,11 +30,11 @@ By default Ekko is initialized with these sensible defaults:
 
 ### Laravel
 
-The only dependency for this package is PHP 7.2+, meaning that you can possibly install it on any Laravel version that supports PHP 7.2. The service provider is always going to follow the latest Laravel release and try to be as backward compatible as possible.
+The only dependency for this package is PHP ^8.0, meaning that you can possibly install it on any Laravel version that supports PHP 8 (I think that for now this is only Laravel 8). The service provider is always going to follow the latest Laravel release and try to be as backward compatible as possible.
 
-Laravel 5.5+ will use the auto-discovery function to register the ServiceProvider and the Facade.
+Laravel 8 will use the auto-discovery function to register the ServiceProvider and the Facade.
 
-If using 5.4 (or if you are not using auto-discovery) you will need to include the service provider and facade in `config/app.php`:
+If you are not using auto-discovery, you will need to include the service provider and facade in `config/app.php`:
 
 ```
 'providers' => [
@@ -144,7 +144,7 @@ Using boolean `true` or `false` is convenient if you need to display some conten
 
 ### Global helper functions
 
-**Global helper functions** as displayed above are disabled by default. To enable them use `Ekko::enableGlobalHelpers();` or `$ekko->enableGlobalHelpers()`.
+**Global helper functions** are disabled by default. To enable them use `Ekko::enableGlobalHelpers();` or `$ekko->enableGlobalHelpers()`.
 
 In Laravel add this code to your `app/Providers/AppServiceProvider.php` file in `register` method:
 
