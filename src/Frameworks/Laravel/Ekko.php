@@ -6,9 +6,6 @@ use Illuminate\Routing\Router;
 
 class Ekko extends \Laravelista\Ekko\Ekko
 {
-    /**
-     * @param Router $router
-     */
     public function __construct(protected Router $router)
     {
         parent::__construct();
@@ -20,10 +17,8 @@ class Ekko extends \Laravelista\Ekko\Ekko
      * global functions are not enabled.
      *
      * This includes Laravel specific helpers.
-     *
-     * @return void
      */
-    public static function enableGlobalHelpers()
+    public static function enableGlobalHelpers(): void
     {
         require_once(__DIR__.'/Helpers.php');
     }
@@ -32,30 +27,43 @@ class Ekko extends \Laravelista\Ekko\Ekko
      * Compares given route name with current route name.
      * Any section of the route name can be replaced with a * wildcard.
      * eg. user.*
-     *
-     * @param string|array $input
-     * @param mixed|null $output
-     * @return mixed|null
      */
-    public function isActiveRoute($input, $output = null)
+    public function isActiveRoute(string|array $input, mixed $output = null): mixed
     {
         if (is_array($input)) {
-            return $this->displayOutput($this->inArray($input, __FUNCTION__), $output);
+            return $this->displayOutput(
+                result: $this->inArray(
+                    input: $input,
+                    methodName: __FUNCTION__
+                ),
+                output: $output
+            );
         }
 
-        $regex = '/^' . str_replace(preg_quote('*'), '.*?', preg_quote($input, '/')) . '$/';
+        $regex = '/^' .
+            str_replace(
+                search: preg_quote('*'),
+                replace: '.*?',
+                subject: preg_quote(
+                    str: $input,
+                    delimiter: '/'
+                )
+            ) .
+            '$/';
 
-        return $this->displayOutput((bool) preg_match($regex, $this->router->currentRouteName() ?? ''), $output);
+        return $this->displayOutput(
+            result: (bool) preg_match(
+                pattern: $regex,
+                subject: $this->router->currentRouteName() ?? ''
+            ),
+            output: $output
+        );
     }
 
     /**
      * It passes the input array to the isActiveRoute method.
-     *
-     * @param array $input
-     * @param mixed|null $output
-     * @return mixed|null
      */
-    public function areActiveRoutes(array $input, $output = null)
+    public function areActiveRoutes(array $input, mixed $output = null): mixed
     {
         return $this->isActiveRoute($input, $output);
     }
@@ -63,12 +71,8 @@ class Ekko extends \Laravelista\Ekko\Ekko
     /**
      * It passes the input to the isActive
      * method on the parent class.
-     *
-     * @param string|array $input
-     * @param mixed|null $output
-     * @return mixed|null
      */
-    public function isActiveURL($input, $output = null)
+    public function isActiveURL(string|array $input, mixed $output = null): mixed
     {
         return $this->isActive($input, $output);
     }
@@ -76,12 +80,8 @@ class Ekko extends \Laravelista\Ekko\Ekko
     /**
      * It passes the input array to the
      * isActive method on the parent class.
-     *
-     * @param array $input
-     * @param mixed|null $output
-     * @return mixed|null
      */
-    public function areActiveURLs(array $input, $output = null)
+    public function areActiveURLs(array $input, mixed $output = null): mixed
     {
         return $this->isActive($input, $output);
     }
@@ -90,12 +90,8 @@ class Ekko extends \Laravelista\Ekko\Ekko
      * Every Url of input is enclosed with wildcard '*'
      * before being passed to the isActive method
      * on the parent class.
-     *
-     * @param string|array $input
-     * @param mixed|null $output
-     * @return mixed|null
      */
-    public function isActiveMatch($input, $output = null)
+    public function isActiveMatch(string|array $input, mixed $output = null): mixed
     {
         if (is_array($input)) {
             $input = array_map(function ($url) {
@@ -110,12 +106,8 @@ class Ekko extends \Laravelista\Ekko\Ekko
 
     /**
      * It passes the input array to the isActiveMatch method.
-     *
-     * @param array $input
-     * @param mixed|null $output
-     * @return mixed|null
      */
-    public function areActiveMatches(array $input, $output = null)
+    public function areActiveMatches(array $input, mixed $output = null): mixed
     {
         return $this->isActiveMatch($input, $output);
     }

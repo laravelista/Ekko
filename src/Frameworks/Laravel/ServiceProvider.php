@@ -9,45 +9,40 @@ use Laravelista\Ekko\Url\LaravelUrlProvider;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider implements DeferrableProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/config.php',
-            'ekko'
+            path: __DIR__.'/config.php',
+            key: 'ekko'
         );
 
-        $this->app->singleton(Ekko::class, function (Application $app) {
-            $ekko = new Ekko($app->make('router'));
-            $ekko->setUrlProvider(new LaravelUrlProvider($app->make('request')));
-            $ekko->setDefaultOutput(Config::get('ekko.default_output'));
+        $this->app->singleton(
+            abstract: Ekko::class,
+            concrete: function (Application $app) {
+                $ekko = new Ekko($app->make(abstract: 'router'));
+                $ekko->setUrlProvider(
+                    urlProvider: new LaravelUrlProvider(
+                        request: $app->make('request')
+                    )
+                );
+                $ekko->setDefaultOutput(value: Config::get(key: 'ekko.default_output'));
 
-            return $ekko;
-        });
+                return $ekko;
+            }
+        );
     }
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
-        $this->publishes([
-            __DIR__.'/config.php' => $this->app->configPath('ekko.php'),
+        $this->publishes(paths: [
+            __DIR__.'/config.php' => $this->app->configPath(path: 'ekko.php'),
         ]);
     }
 
     /**
      * Get the services provided by the provider.
-     *
-     * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return [Ekko::class];
     }

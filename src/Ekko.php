@@ -9,26 +9,17 @@ use Laravelista\Ekko\Url\UrlProviderInterface;
  * This is the main (core) class of Ekko.
  * Extend this class to customize for specific framework.
  *
- * See Frameworks/Laravel/Ekko.php for details.
+ * @see Laravelista\Ekko\Frameworks\Laravel\Ekko
  */
 class Ekko
 {
-    /**
-     * This value gets returned if the
-     * given output equals null.
-     *
-     * @var mixed $defaultOutput Can be anything.
-     */
-    protected $defaultOutput = 'active';
-
-    /**
-     * Holds the Url provider.
-     *
-     * @var UrlProviderInterface $url
-     */
     protected UrlProviderInterface $url;
 
-    public function __construct()
+    /**
+     * @param mixed $defaultOutput This value gets returned if
+     * the given output equals null.
+     */
+    public function __construct(protected mixed $defaultOutput = 'active')
     {
         $this->url = new GenericUrlProvider();
     }
@@ -37,22 +28,16 @@ class Ekko
      * This static method uses `require_once` to
      * include global helper functions. By default
      * global functions are not enabled.
-     *
-     * @return void
      */
-    public static function enableGlobalHelpers()
+    public static function enableGlobalHelpers(): void
     {
         require_once(__DIR__.'/Helpers.php');
     }
 
     /**
      * Use this to change the default output value.
-     *
-     * @param mixed $value This can be anything
-     *
-     * @return void
      */
-    public function setDefaultOutput($value): void
+    public function setDefaultOutput(string $value): void
     {
         $this->defaultOutput = $value;
     }
@@ -61,11 +46,8 @@ class Ekko
      * Used internally to determine what needs
      * to be returned as output, user given output or
      * the default output.
-     *
-     * @param mixed $output Can be null or user given output.
-     * @return mixed
      */
-    public function getOutput($output)
+    public function getOutput(mixed $output): mixed
     {
         return $output ?? $this->defaultOutput;
     }
@@ -73,10 +55,6 @@ class Ekko
     /**
      * It sets the Url provider. If none is set,
      * then it uses the GenericUrlProvider.
-     *
-     * @param UrlProviderInterface $urlProvider
-     *
-     * @return void
      */
     public function setUrlProvider(UrlProviderInterface $urlProvider): void
     {
@@ -85,10 +63,8 @@ class Ekko
 
     /**
      * It returns the Url provider instance.
-     *
-     * @return UrlProviderInterface
      */
-    public function getUrlProvider()
+    public function getUrlProvider(): UrlProviderInterface
     {
         return $this->url;
     }
@@ -97,8 +73,6 @@ class Ekko
      * It uses the Url provider `current()` method
      * to get the current Url. If no Url provider is set,
      * it uses the GenericUrlProvider.
-     *
-     * @return string
      */
     public function getCurrentUrl(): string
     {
@@ -111,10 +85,6 @@ class Ekko
      * to the single element in the array and returns true
      * immediately if there is a match, otherwise it returns false
      * at the end.
-     *
-     * @param array $input Array of URLs.
-     * @param string $methodName The name of the method.
-     * @return boolean
      */
     protected function inArray(array $input, string $methodName): bool
     {
@@ -131,14 +101,10 @@ class Ekko
      * Depending on the result it returns the user given output
      * or the default output value or if the result is false,
      * then it returns null.
-     *
-     * @param boolean $result The result of the match.
-     * @param mixed $output User given output.
-     * @return mixed|null Is either user given output or the default output value or null
      */
-    public function displayOutput(bool $result, $output)
+    public function displayOutput(bool $result, mixed $output): mixed
     {
-        return $result ? $this->getOutput($output) : null;
+        return $result ? $this->getOutput(output: $output) : null;
     }
 
     /**
@@ -147,19 +113,36 @@ class Ekko
      *
      * eg. `/user*` becomes `/^\/user.*?(\?.*?)*?&/ and if the current Url is `/user`
      * it returns output or the default output if user given output is null.
-     *
-     * @param array|string $input URL or array of URLs.
-     * @param null|mixed $output User given output.
-     * @return mixed|null Either user given output or the default output value or null.
      */
-    public function isActive(array|string $input, $output = null)
+    public function isActive(array|string $input, mixed $output = null): mixed
     {
         if (is_array($input)) {
-            return $this->displayOutput($this->inArray($input, __FUNCTION__), $output);
+            return $this->displayOutput(
+                result: $this->inArray(
+                    input: $input,
+                    methodName: __FUNCTION__
+                ),
+                output: $output
+            );
         }
 
-        $regex = '/^' . str_replace(preg_quote('*'), '.*?', preg_quote($input, '/')) . '(\?.*?)*?$/';
+        $regex = '/^' .
+            str_replace(
+                search: preg_quote(str: '*'),
+                replace: '.*?',
+                subject: preg_quote(
+                    str: $input,
+                    delimiter: '/'
+                )
+            ) .
+            '(\?.*?)*?$/';
 
-        return $this->displayOutput((bool) preg_match($regex, $this->getCurrentUrl()), $output);
+        return $this->displayOutput(
+            result: (bool) preg_match(
+                pattern: $regex,
+                subject: $this->getCurrentUrl()
+            ),
+            output: $output
+        );
     }
 }
