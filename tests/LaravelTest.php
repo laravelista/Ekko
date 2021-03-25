@@ -27,9 +27,6 @@ class LaravelTest extends TestCase
         $this->ekko->setUrlProvider(new LaravelUrlProvider($this->request));
     }
 
-    /**
-     * @psalm-return array{0: array{0: string, 1: string, 2: string}, 1: array{0: string, 1: string, 2: string, 3: string}, 2: array{0: string, 1: string, 2: null}, 3: array{0: string, 1: string, 2: null, 3: string}, 4: array{0: string, 1: string, 2: string}, 5: array{0: string, 1: string, 2: string, 3: string}, 6: array{0: string, 1: string, 2: null}, 7: array{0: string, 1: string, 2: null, 3: string}}
-     */
     public function isActiveRouteDataProvider(): array
     {
         $route_name = 'users.index';
@@ -63,11 +60,6 @@ class LaravelTest extends TestCase
         );
     }
 
-    /**
-     * @return (null|string|string[])[][]
-     *
-     * @psalm-return array{0: array{0: string, 1: array{0: string}, 2: string}, 1: array{0: string, 1: array{0: string}, 2: string, 3: string}, 2: array{0: string, 1: array{0: string}, 2: null}, 3: array{0: string, 1: array{0: string}, 2: null, 3: string}, 4: array{0: string, 1: array{0: string}, 2: string}, 5: array{0: string, 1: array{0: string}, 2: string, 3: string}, 6: array{0: string, 1: array{0: string}, 2: null}, 7: array{0: string, 1: array{0: string}, 2: null, 3: string}, 8: array{0: string, 1: array{0: string}, 2: string}, 9: array{0: string, 1: array{0: string}, 2: string, 3: string}, 10: array{0: string, 1: array{0: string}, 2: null}, 11: array{0: string, 1: array{0: string}, 2: null, 3: string}}
-     */
     public function areActiveRoutesDataProvider(): array
     {
         $route_name = 'users.index';
@@ -96,8 +88,6 @@ class LaravelTest extends TestCase
      * @dataProvider areActiveRoutesDataProvider
      *
      * @test
-     *
-     * @return void
      */
     public function areActiveRoutes($routeName, array $input, $result, $output = null): void
     {
@@ -106,11 +96,6 @@ class LaravelTest extends TestCase
         $this->assertEquals($result, $this->ekko->areActiveRoutes($input, $output));
     }
 
-    /**
-     * @return (null|string)[][]
-     *
-     * @psalm-return array{0: array{0: string, 1: string, 2: string}, 1: array{0: string, 1: string, 2: string, 3: string}, 2: array{0: string, 1: string, 2: null}, 3: array{0: string, 1: string, 2: null, 3: string}, 4: array{0: string, 1: string, 2: string}, 5: array{0: string, 1: string, 2: string, 3: string}, 6: array{0: string, 1: string, 2: null}, 7: array{0: string, 1: string, 2: null, 3: string}}
-     */
     public function isActiveURLDataProvider(): array
     {
         $user_index_path = '/users';
@@ -134,8 +119,6 @@ class LaravelTest extends TestCase
      * @dataProvider isActiveURLDataProvider
      *
      * @test
-     *
-     * @return void
      */
     public function isActiveURL($path, $input, $result, $output = null): void
     {
@@ -144,11 +127,6 @@ class LaravelTest extends TestCase
         $this->assertEquals($result, $this->ekko->isActiveURL($input, $output));
     }
 
-    /**
-     * @return (null|string|string[])[][]
-     *
-     * @psalm-return array{0: array{0: string, 1: array{0: string}, 2: string}, 1: array{0: string, 1: array{0: string}, 2: string, 3: string}, 2: array{0: string, 1: array{0: string}, 2: null}, 3: array{0: string, 1: array{0: string}, 2: null, 3: string}}
-     */
     public function areActiveURLsDataProvider(): array
     {
         $user_index_path = '/users';
@@ -166,8 +144,6 @@ class LaravelTest extends TestCase
      * @dataProvider areActiveURLsDataProvider
      *
      * @test
-     *
-     * @return void
      */
     public function areActiveURLs($path, array $input, $result, $output = null): void
     {
@@ -176,12 +152,7 @@ class LaravelTest extends TestCase
         $this->assertEquals($result, $this->ekko->areActiveURLs($input, $output));
     }
 
-    /**
-     * @test
-     *
-     * @return void
-     */
-    public function it_detects_active_match_in_url(): void
+    public function test_it_detects_active_match_in_url(): void
     {
         $this->request->shouldReceive('getRequestUri')->times(4)
             ->andReturn('/somewhere-over-the-rainbow');
@@ -192,11 +163,6 @@ class LaravelTest extends TestCase
         $this->assertEquals(null, $this->ekko->isActiveMatch('under-the-rainbow', 'hello'));
     }
 
-    /**
-     * @return (null|string)[][]
-     *
-     * @psalm-return array{0: array{0: string, 1: string, 2: string}, 1: array{0: string, 1: string, 2: string, 3: string}, 2: array{0: string, 1: string, 2: null}, 3: array{0: string, 1: string, 2: null, 3: string}}
-     */
     public function isActiveMatchDataProvider(): array
     {
         $article_path = '/somewhere-over-the-rainbow';
@@ -214,8 +180,6 @@ class LaravelTest extends TestCase
      * @dataProvider isActiveMatchDataProvider
      *
      * @test
-     *
-     * @return void
      */
     public function isActiveMatch(string $path, mixed $input, mixed $result, mixed $output = null): void
     {
@@ -224,11 +188,6 @@ class LaravelTest extends TestCase
         $this->assertEquals($result, $this->ekko->isActiveMatch($input, $output));
     }
 
-    /**
-     * @return (null|string|string[])[][]
-     *
-     * @psalm-return array{0: array{0: string, 1: array{0: string, 1: string}, 2: string}, 1: array{0: string, 1: array{0: string, 1: string}, 2: string, 3: string}, 2: array{0: string, 1: array{0: string, 1: string}, 2: null}, 3: array{0: string, 1: array{0: string, 1: string}, 2: null, 3: string}}
-     */
     public function areActiveMatchesDataProvider(): array
     {
         $article_path = '/somewhere-over-the-rainbow';
@@ -246,8 +205,6 @@ class LaravelTest extends TestCase
      * @dataProvider areActiveMatchesDataProvider
      *
      * @test
-     *
-     * @return void
      */
     public function areActiveMatches(string $path, array $input, mixed $result, mixed $output = null): void
     {
@@ -256,12 +213,7 @@ class LaravelTest extends TestCase
         $this->assertEquals($result, $this->ekko->areActiveMatches($input, $output));
     }
 
-    /**
-     * @test
-     *
-     * @return void
-     */
-    public function globalHelpers(): void
+    public function testGlobalHelpers(): void
     {
         $this->assertFalse(function_exists('is_active_url'));
         $this->assertFalse(function_exists('isActiveURL'));
@@ -301,12 +253,7 @@ class LaravelTest extends TestCase
         $this->assertTrue(function_exists('is_active'));
     }
 
-    /**
-     * @test
-     *
-     * @return void
-     */
-    public function defaultOutput(): void
+    public function testDefaultOutput(): void
     {
         $this->request->shouldReceive('getRequestUri')->times(2)->andReturn('/');
 
@@ -316,12 +263,7 @@ class LaravelTest extends TestCase
         $this->assertEquals('test', $this->ekko->isActiveURL('/', 'test'));
     }
 
-    /**
-     * @test
-     *
-     * @return void
-     */
-    public function urlProvider(): void
+    public function testUrlProvider(): void
     {
         $this->assertInstanceOf(LaravelUrlProvider::class, $this->ekko->getUrlProvider());
     }

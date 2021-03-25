@@ -13,11 +13,6 @@ class EkkoTest extends TestCase
         $this->ekko = new Ekko();
     }
 
-    /**
-     * @return (null|string|string[])[][]
-     *
-     * @psalm-return array{0: array{0: string, 1: string, 2: string}, 1: array{0: string, 1: string, 2: null}, 2: array{0: string, 1: string, 2: string}, 3: array{0: string, 1: string, 2: string}, 4: array{0: string, 1: array{0: string, 1: string}, 2: string}, 5: array{0: string, 1: string, 2: null}, 6: array{0: string, 1: string, 2: null}, 7: array{0: string, 1: array{0: string, 1: string}, 2: null}, 8: array{0: string, 1: string, 2: string}, 9: array{0: string, 1: string, 2: string}, 10: array{0: string, 1: string, 2: string}, 11: array{0: string, 1: string, 2: string}, 12: array{0: string, 1: string, 2: string}, 13: array{0: string, 1: string, 2: string}, 14: array{0: string, 1: array{0: string, 1: string}, 2: string}, 15: array{0: string, 1: string, 2: null}, 16: array{0: string, 1: string, 2: null}, 17: array{0: string, 1: string, 2: null}, 18: array{0: string, 1: array{0: string, 1: string}, 2: null}, 19: array{0: string, 1: string, 2: string}, 20: array{0: string, 1: string, 2: string}, 21: array{0: string, 1: string, 2: string}, 22: array{0: string, 1: string, 2: string}, 23: array{0: string, 1: array{0: string, 1: string}, 2: string}, 24: array{0: string, 1: array{0: string, 1: string}, 2: string, 3: string}, 25: array{0: string, 1: string, 2: null}, 26: array{0: string, 1: string, 2: null}, 27: array{0: string, 1: string, 2: null}, 28: array{0: string, 1: array{0: string, 1: string}, 2: null}, 29: array{0: string, 1: string, 2: string}, 30: array{0: string, 1: string, 2: string}, 31: array{0: string, 1: string, 2: string}, 32: array{0: string, 1: string, 2: null}, 33: array{0: string, 1: string, 2: string}, 34: array{0: string, 1: string, 2: string, 3: string}, 35: array{0: string, 1: string, 2: string}, 36: array{0: string, 1: string, 2: string}, 37: array{0: string, 1: string, 2: string}, 38: array{0: string, 1: string, 2: string}, 39: array{0: string, 1: string, 2: null}, 40: array{0: string, 1: string, 2: null}}
-     */
     public function isActiveDataProvider(): array
     {
         $root_path = '/';
@@ -81,8 +76,6 @@ class EkkoTest extends TestCase
      * @test
      *
      * @dataProvider isActiveDataProvider
-     *
-     * @return void
      */
     public function isActive($path, $input, $result, $output = null): void
     {
@@ -91,12 +84,7 @@ class EkkoTest extends TestCase
         $this->assertEquals($result, $this->ekko->isActive($input, $output));
     }
 
-    /**
-     * @test
-     *
-     * @return void
-     */
-    public function globalHelpers(): void
+    public function testGlobalHelpers(): void
     {
         $_SERVER['REQUEST_URI'] = '/';
 
@@ -105,12 +93,7 @@ class EkkoTest extends TestCase
         $this->assertEquals('active', is_active('/'));
     }
 
-    /**
-     * @test
-     *
-     * @return void
-     */
-    public function defaultOutput(): void
+    public function testDefaultOutput(): void
     {
         $_SERVER['REQUEST_URI'] = '/';
 
@@ -120,13 +103,11 @@ class EkkoTest extends TestCase
         $this->assertEquals('test', $this->ekko->isActive('/', 'test'));
     }
 
-    /**
-     * @test
-     *
-     * @return void
-     */
-    public function urlProvider(): void
+    public function testUrlProvider(): void
     {
-        $this->assertInstanceOf(GenericUrlProvider::class, $this->ekko->getUrlProvider());
+        $this->assertInstanceOf(
+            expected: GenericUrlProvider::class,
+            actual: $this->ekko->getUrlProvider()
+        );
     }
 }
